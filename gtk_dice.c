@@ -81,10 +81,10 @@
 #define MAXSIZ_DBGMSG		(1023+1)
 #define MAXSIZ_FNAME		(128+1)
 
-#define DIR_GUI			"gui/"
+#define DIR_GUI			"gui/"			/* gui resources */
 #define FNAME_APPICON		DIR_GUI"3d_01.png"
 #define FNAME_APPLOGO		FNAME_APPICON
-#define FNAME_GLADE		"gui/dice.glade"
+#define FNAME_GLADE		DIR_GUI"dice.glade"
 
 /* total number of image-files used for the 3d & 2d roll-animations */
 #define NFRAMES_3D			32
@@ -169,10 +169,10 @@ typedef struct Core {
 	gint32	resultRolled;
 }Core;
 
-/* alias of some GTK+2 widget types (just for consistency reasons) */
+/* aliases of some GTK+2 widget types (just for consistency reasons) */
 typedef GtkWidget GuiWindow, GuiDialog;
 
-/* a bit more convenient GUI representation of the menus */
+/* a bit more convenient GUI abstraction of the menus */
 typedef struct GuiMenus {
 	GtkWidget	*titleFile;
 	GtkWidget	*itemQuit;
@@ -185,7 +185,7 @@ typedef struct GuiMenus {
 	GtkWidget 	*itemAbout;
 }GuiMenus;
 
-/* more convenient GUI representation of the "Die area".
+/* more convenient GUI abstraction of the "Die area".
  * 	The GUI "Die area" consists of an event-box, an image & a "Roll" button.
  *	Since in GTK+2 image-widgets are not clickable, we create an event-box
  *	as their parent, and then we catch the signals emitted by that event-box
@@ -204,7 +204,7 @@ typedef struct GuiDieArea3d {
 	GtkWidget	*imgWidget;
 }GuiDieArea3d;
 
-/* a bit more convenient GUI representation of an horizontal slider */
+/* a bit more convenient GUI abstraction of an horizontal slider */
 typedef struct GuiHorzSlider {
 	GtkWidget	*widget;
 	GtkAdjustment	*adjustment;
@@ -218,7 +218,7 @@ typedef struct GuiHorzSlider {
 	*/
 }GuiHorzSlider;
 
-/* more convenient GUI representation of the "Settings area" */
+/* more convenient GUI abstraction of the "Settings area" */
 typedef struct GuiSettings {
 	GtkWidget	*chkbtnDebugInfoWidget;
 	GtkWidget	*chkbtnRollEffectWidget;
@@ -232,14 +232,14 @@ typedef struct GuiSettings {
 	GtkWidget	*btnDefault2dWidget;
 }GuiSettings;
 
-/* a bit more convenient GUI representation of the status-bar */
+/* a bit more convenient GUI abstraction of the status-bar */
 typedef struct GuiStatusBar {
 	GtkWidget 	*widget;
 	guint		contextId;
 	guint		currMessageId;
 }GuiStatusBar;
 
-/* convenient representation of the application's GUI
+/* a bit more convenient abstraction of the application's GUI
  *	consists of the smaller structs defined above, along
  *	with a pointer that links the GUI with the core-data.
  */
@@ -250,7 +250,7 @@ typedef struct Gui {
 	GuiDialog	*dlgAbout;
 	GuiMenus	menu;
 	GuiDieArea 	dieArea;
-	GuiDieArea3d 	dieArea3d;
+	GuiDieArea3d 	dieArea3d;	/* unused */
 	GuiSettings	settings;
 	GuiStatusBar	statusBar;
 	Core		*linkToCoreData;
@@ -911,7 +911,7 @@ The GUI language falled back to ENGLISH.")
  * Callback function connected to the GTK+ "activate"
  * signal, for the menu-item "Menu->About".
  *
- *	Displays the About dialog, which is defined
+ *	Displays the "About" dialog, which is defined
  *	as a GtkAboutDialog window in the Glade file.
  *
  *	This makes it easier to present the desired
@@ -1238,7 +1238,7 @@ static gboolean on_activate_link_dlgAbout(
 	*/
 	return TRUE;
 }
-#endif
+#endif	/* #if G_OS_WIN32 */
 
 /*************************************************//**
  * Callback function connected to the GTK+ "button_press_event"
@@ -1287,6 +1287,7 @@ static gboolean on_button_press_event_evboxImg(
 	return TRUE;
 }
 
+#if DISABLED
 /*************************************************//**
  * ** UNUSED **
  * Callback function connected to the GTK+ "button_press_event"
@@ -1344,6 +1345,7 @@ static gboolean on_button_press_event_evboxImg3d(
 	*/
 	return TRUE;
 }
+#endif	/* #if DISABLED */
 
 /*************************************************//**
  * Callback function connected to the GTK+ "toggled"
@@ -1611,8 +1613,8 @@ static void on_clicked_btnSettingsDefault2d(
  * Initialize the button "Default 2D".
  *
  *	Copies the GUI button from the specified GTK+ builder into
- *	my GUI settings abstraction, it connects callback functions
- *	to it and initializes its visual appearance.
+ *	my GUI settings abstraction: gui->settings, it connects
+ *	callback functions to it and initializes its visual appearance.
  *
  *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
  *		ensures that the widget pointer will be set to NULL
@@ -1656,8 +1658,8 @@ static gboolean gui_init_settings_btnDefault2d( Gui *gui, GtkBuilder *builder )
  * Initialize the button "Default 3D".
  *
  *	Copies the GUI button from the specified GTK+ builder into
- *	my GUI settings abstraction, it connects callback functions
- *	to it and initializes its visual appearance.
+ *	my GUI settings abstraction: gui->settings, it connects
+ *	callback functions to it and initializes its visual appearance.
  *
  *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
  *		ensures that the widget pointer will be set to NULL
@@ -1701,11 +1703,13 @@ static gboolean gui_init_settings_btnDefault3d( Gui *gui, GtkBuilder *builder )
  * Initialize the horizontal slider "StepDelay".
  *
  *	Copies the GUI slider from the specified GTK+ builder into
- *	my GUI settings abstraction, it connects callback functions
- *	to it and initializes its visual appearance.
+ *	my GUI settings abstraction: gui->settings, it connects
+ *	callback functions to it and initializes its visual appearance.
  *
- *	My hslider abstraction consists of 3 GTK+ graphical elements:
- *	a label widget, an hscale widget and an adjustment.
+ *	My gui->settings.hsliderXxx abstraction (GuiHorzSlider) consists
+ *	of 2 GTK+ graphical elements (an hscale widget and an adjustment)
+ *	and some other supporting fields. We get the former from the
+ *	builder and we initialize & apply the latter.
  *
  *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
  *		ensures that the widget pointer will be set to NULL
@@ -1790,8 +1794,10 @@ static gboolean gui_init_settings_hsliderStepDelay(
  *	my GUI settings abstraction, it connects callback functions
  *	to it and initializes its visual appearance.
  *
- *	My hslider abstraction consists of 3 GTK+ graphical elements:
- *	a label widget, an hscale widget and an adjustment.
+ *	My gui->settings.hsliderXxx abstraction (GuiHorzSlider) consists
+ *	of 2 GTK+ graphical elements (an hscale widget and an adjustment)
+ *	and some other supporting fields. We get the former from the
+ *	builder and we initialize & apply the latter.
  *
  *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
  *		ensures that the widget pointer will be set to NULL
@@ -1876,8 +1882,10 @@ static gboolean gui_init_settings_hsliderBaseDelay(
  *	my GUI settings abstraction, it connects callback functions
  *	to it and initializes its visual appearance.
  *
- *	My hslider abstraction consists of 3 GTK+ graphical elements:
- *	a label widget, an hscale widget and an adjustment.
+ *	My gui->settings.hsliderXxx abstraction (GuiHorzSlider) consists
+ *	of 2 GTK+ graphical elements (an hscale widget and an adjustment)
+ *	and some other supporting fields. We get the former from the
+ *	builder and we initialize & apply the latter.
  *
  *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
  *		ensures that the widget pointer will be set to NULL
@@ -1956,9 +1964,9 @@ static gboolean gui_init_settings_hsliderMaxSteps(
  * Initialize the check-button "Use 2D rolling-effect".
  *
  *	Copies the GUI check-button from the specified GTK+
- *	builder into my GUI settings abstraction, it connects
- *	callback functions to it and initializes its visual
- *	appearance.
+ *	builder into my GUI settings abstraction: gui->settings,
+ *	it connects callback functions to it and initializes its
+ *	visual appearance.
  *
  *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
  *		ensures that the widget pointer will be set to NULL
@@ -2011,9 +2019,9 @@ static gboolean gui_init_settings_chkbtnUse2dRollEffect(
  * Initialize the check-button "Debugging mode".
  *
  *	Copies the GUI check-button from the specified GTK+
- *	builder into my GUI settings abstraction, it connects
- *	callback functions to it and initializes its visual
- *	appearance.
+ *	builder into my GUI settings abstraction: gui->settings,
+ *	it connects callback functions to it and initializes its
+ *	visual appearance.
  *
  *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
  *		ensures that the widget pointer will be set to NULL
@@ -2118,8 +2126,9 @@ static gboolean gui_init_dieArea3d( Gui *gui, GtkBuilder *builder )
  *	three GTK+ widgets: an event-box, an image and a button.
  *
  *	This function copies those widgets from the specified GTK+
- *	builder into my GUI abstraction, it connects callback functions
- *	to them and it initializes their visual appearance.
+ *	builder into my GUI abstraction: gui->dieArea (GuiDieArea),
+ *	it connects callback functions to them and it initializes
+ *	their visual appearance.
  *
  *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
  *		ensures that the widget pointer will be set to NULL
@@ -2188,7 +2197,35 @@ static gboolean gui_init_dieArea( Gui *gui, GtkBuilder *builder )
 }
 
 /*************************************************//**
+ * Initialize the "About" dialog.
  *
+ *	Copies the GUI dialog "About" from the specified GTK+
+ *	builder into my GUI abstraction: gui->dlgAbout, it
+ *	initializes the dialog's contents and it connects
+ *	callback functions.
+ *
+ *	The "About" dialog is defined of type GtkAboutDialog
+ *	in the Glade file, which provides a standardized way
+ *	of presenting inormation. However, I haven't found
+ *	an easy way to access the members of its action-area,
+ *	namely the buttons: "Credits", "License" and "Close".
+ *
+ *	Consequently, I cannot mark the labels of those buttons
+ *	as translatable, for the GNU-gettext library (I could
+ *	implement it as a normal GtkDialog, but I prefer to
+ *	learn the GtkAboutDialog internals and use them in
+ *	a future version).
+ *
+ *	NOTE:	The callback function: on_activate_link_dlgAbout()
+ *		is connected to the "activate-link" signal ONLY
+ *		when the program is compiled under Win32. GTK+'s
+ *		file-engine (Gio) has trouble registering the
+ *		"http://" and "mailto:" protocols under Win32,
+ *		so I conditionally use the Win32 API if needed.
+ *
+ *		The GTK+ callback function: gtk_widget_destroyed()
+ *		ensures that the dialog's pointer will be set to
+ *		NULL after the widget gets destroyed.
  *****************************************************
  */
 static gboolean gui_init_dlgAbout( Gui *gui, GtkBuilder *builder )
@@ -2305,7 +2342,16 @@ static gboolean gui_init_dlgAbout( Gui *gui, GtkBuilder *builder )
 }
 
 /*************************************************//**
+ * Initialize the menus of the program.
  *
+ *	Copies the menu widgets from the specified GTK+ builder
+ *	into my GUI abstraction: gui->menu (GuiMenus), it connects
+ *	callback functions to them and it initializes their visual
+ *	appearance.
+ *
+ *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
+ *		ensures that the widget pointer will be set to NULL
+ *		after the widget gets destroyed.
  *****************************************************
  */
 static gboolean gui_init_menus( Gui *gui, GtkBuilder *builder )
@@ -2447,7 +2493,21 @@ static gboolean gui_init_menus( Gui *gui, GtkBuilder *builder )
 }
 
 /*************************************************//**
+ * Initialize the status-bar of our main window.
  *
+ *	Copies the GUI status-bar from the specified GTK+ builder into
+ *	my GUI status-bar abstraction: gui->statusBar (GuiStatusBar),
+ *	it connects callback functions to it and initializes its visual
+ *	appearance.
+ *
+ *	My status-bar abstraction consists of a GTK+ statusbar widget,
+ *	and a couple of supporting fields for the context-id and the
+ *	text-message. We get the former from the builder and we
+ *	initialize & apply the latter.
+ *
+ *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
+ *		ensures that the widget pointer will be set to NULL
+ *		after the widget gets destroyed.
  *****************************************************
  */
 static gboolean gui_init_statusBar( Gui *gui, GtkBuilder *builder )
@@ -2484,7 +2544,15 @@ static gboolean gui_init_statusBar( Gui *gui, GtkBuilder *builder )
 }
 
 /*************************************************//**
+ * Initialize the main window of the application.
  *
+ *	Copies the main window widget from the specified GTK+ builder
+ *	to my GUI abstraction: gui->appWindow, it connects callback
+ *	functions to it and initializes its visual appearance.
+ *
+ *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
+ *		ensures that the widget pointer will be set to NULL
+ *		after the widget gets destroyed.
  *****************************************************
  */
 static gboolean gui_init_appWindow( Gui *gui, GtkBuilder *builder )
@@ -2533,7 +2601,7 @@ static gboolean gui_init_appWindow( Gui *gui, GtkBuilder *builder )
 }
 
 /*************************************************//**
- *
+ * Prepare the GNU-gettext library for localizing our program.
  *****************************************************
  */
 static gboolean init_gettext_localization(
@@ -2566,8 +2634,9 @@ static gboolean init_gettext_localization(
 	return TRUE;
 }
 
+#if DISABLED
 /*************************************************//**
- * 
+ * UNUSED ***
  *****************************************************
  */
 static gboolean gui_unload( Gui *gui )
@@ -2587,6 +2656,7 @@ static gboolean gui_unload( Gui *gui )
 
 	return TRUE;
 }
+#endif	/* #if DISABLED */
 
 /*************************************************//**
  * 
