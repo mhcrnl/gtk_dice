@@ -716,36 +716,39 @@ static gboolean on_delete_event_appWindow(
  *	close icon (on Windows that's the 'x' icon, located at
  *	the top right corner of the window).
  *
- *	Normally we just want to terminate the GTK+ main-loop so
- *	the flow continues to our cleanup code (if any), in the
- *	main() function, and then terminate the program.
+ *	Normally we just want to terminate the GTK+ main-loop
+ *	so the flow continues to our cleanup code (if any),
+ *	in the main() function and then terminate the program.
  *
- *	However, in this program a signal for destroying the main
- *	application window does not necessarily mean that the user
- *	has requested program temination.
+ *	However, in this program a signal for destroying the
+ *	main application window does not necessarily mean that
+ *	the user has requested program temination.
  *
- *	It could be that the signal has been "artificially" produced
- *	by the program itself, when the user requested a dynamic
- *	change of the GUI language.
+ *	It could be that the signal has been "artificially"
+ *	produced by the program itself, when the user requested
+ *	a dynamic change of the GUI language, right after
+ *	changing the value of the environment-variable LANG.
  *
- *	In those cases, the program schedules the destruction of all
- *	its top-level windows (thus its main window too) inside the
- *	function: gui_reload_gtkGladeFile(), by calling the function
- *	gtk_widget_destroy() on all top-level windows.
+ *	In those cases, the program schedules the destruction
+ *	of all its top-level windows (thus its main window too)
+ *	inside the function: gui_reload_gtkGladeFile(), by
+ *	calling gtk_widget_destroy() on all of them.
  *
- *	Once this is done, the GUI resources are re-loaded from the
- *	Glade file, which means that they get re-initialized according
- *	to the newely specified language, due to GNU-gettext().
+ *	Once this is done, the GUI resources are re-loaded from
+ *	the Glade file, which means that they get re-initialized
+ *	according to the new value of LANG, due to GNU-gettext.
  *
- *	So obviously, a "destroy" signal sent by the main window of
- *	the application does not always dictate program termination.
+ *	So obviously, a "destroy" signal sent by the main window
+ *	of the application does not always dictate program termination.
  *
  *	To distingusigh whether a "destroy" signal should terminate
  *	the main loop of GTK+ or not, I use the boolean variable:
  *	gui->quitOnDestroyAppWindow. If it is TRUE gtk_main_quit()
  *	is called, otherwise the GTK+ main-loop keeps going on.
  *
- *	See also: gui_reload_gtkGladeFile()
+ *	See also:
+ *		gui_reload_gtkGladeFile(), on_activate_miEnglish(),
+ *		on_activate_miGreek() and on_activate_miEnvLang().
  *****************************************************
  */
 static void on_destroy_appWindow( GtkWidget *appWindow, Gui *gui )
@@ -767,6 +770,9 @@ static void on_destroy_appWindow( GtkWidget *appWindow, Gui *gui )
  *	The menu-item is visualy disabled, LANG is set
  *	to "en" and the whole GUI is reloaded in order
  *	to reflect the change of the language.
+ *
+ *	NOTE:	To better understand how this works,
+ *		see also: gui_reload_gtkGladeFile().
  *****************************************************
  */
 static void on_activate_miEnglish( GtkWidget *menuItem, Gui *gui )
@@ -808,6 +814,9 @@ static void on_activate_miEnglish( GtkWidget *menuItem, Gui *gui )
  *	The menu-item is visualy disabled, LANG is set
  *	to "el" and the whole GUI is reloaded in order
  *	to reflect the change of the language.
+ *
+ *	NOTE:	To better understand how this works,
+ *		see also: gui_reload_gtkGladeFile().
  *****************************************************
  */
 static void on_activate_miGreek( GtkWidget *menuItem, Gui *gui )
@@ -862,8 +871,11 @@ static void on_activate_miGreek( GtkWidget *menuItem, Gui *gui )
  *
  *		In that case the user is not directly
  *		informed, but he gets a visual hint
-		because the menu-item stays disabled
+ *		because the menu-item stays disabled
  *		inside the menu.
+ *
+ *		To better understand how this works,
+ *		see also: gui_reload_gtkGladeFile().
  *****************************************************
  */
 static void on_activate_miEnvLang( GtkWidget *menuItem, Gui *gui )
@@ -2601,7 +2613,7 @@ static gboolean gui_init_appWindow( Gui *gui, GtkBuilder *builder )
 }
 
 /*************************************************//**
- * Prepare the GNU-gettext library for localizing our program.
+ * Initialize localization via the GNU-gettext library.
  *****************************************************
  */
 static gboolean init_gettext_localization(
@@ -2659,7 +2671,13 @@ static gboolean gui_unload( Gui *gui )
 #endif	/* #if DISABLED */
 
 /*************************************************//**
- * 
+ * Load GUI resources from the specified Glade file.
+ *
+ *	This function uses a GTK+ builder object to read the
+ *	GUI resources defined in the specified glade-file,
+ *	then it copies into my GUI abstraction only those
+ *	resources that need further manipulation dynamically,
+ *	and it initializes them.
  *****************************************************
  */
 static gboolean gui_load_gtkGladeFile( Gui *gui, const gchar *fnameGlade )
@@ -2707,22 +2725,49 @@ static gboolean gui_load_gtkGladeFile( Gui *gui, const gchar *fnameGlade )
 	/* release the GTK+2 builder */
 	g_object_unref( G_OBJECT(builder) );
 
-	/* */
-	gui->quitOnDestroyAppWindow = TRUE;
-
 	return TRUE;
 }
 
 /*************************************************//**
- * 
+ * Reload GUI resources from the specified Glade file.
+ *
+ *	This function is called when the user requests a dynamic
+ *	change of the GUI language, via the "Language" menu.
+ *
+ *	It schedules the destruction of all the top-level windows
+ *	of the program by calling gtk_widget_destroy() on them.
+ *
+ *	Before scheduling the main window of the application,
+ *	it sets 'gui->quitOnDestroyAppWindow' to FALSE so that
+ *	the connected callback function: on_destroy_appWindow()
+ *	will NOT terminate the program after destructing the window
+ *	(remember that 'gui' is passed as user-data to the callback
+ *	function).
+ *
+ *	Once scheduling is done, 'gui->quitOnDestroyAppWindow'
+ *	is reset back to TRUE and the GUI resources are loaded 
+ *	from scratch, from the glade-file into my 'gui' abstarction,
+ *	by calling: gui_load_gtkGladeFile().
+ *
+ *	NOTE:	Before this function is called, the environment-variable
+ *		LANG is explicitly set according to the user-request.
+ *		Since the GNU-gettext library is runtime-aware with
+ *		a LANG dependency, the reloaded GUI is displayed in
+ *		the language requested by the user.
+ *
+ * 	See also:
+ *		on_activate_miEnglish(), on_activate_miGreek(),
+ *		and on_activate_miEnvLang().
  *****************************************************
  */
 static gboolean gui_reload_gtkGladeFile( Gui *gui, const gchar *fnameGlade )
 {
+	/* sanity check */
 	if ( !gui ) {
 		return FALSE;
 	}
 
+	/* schedule the destruction of all top-level windows */
 	if ( gui->dlgAbout ) {
 		gtk_widget_destroy( gui->dlgAbout );
 		gui->dlgAbout = NULL;
@@ -2732,11 +2777,13 @@ static gboolean gui_reload_gtkGladeFile( Gui *gui, const gchar *fnameGlade )
 		gtk_widget_destroy( gui->appWindow );
 	}
 
+	gui->quitOnDestroyAppWindow = TRUE;
 	return gui_load_gtkGladeFile(gui, fnameGlade);
 }
 
 /*************************************************//**
- * 
+ * Cleanup GUI related stuff.
+ * Normally, this function is called before program termination.
  *****************************************************
  */
 static void gui_cleanup( Gui *gui )
@@ -2752,23 +2799,57 @@ static void gui_cleanup( Gui *gui )
 }
 
 /*************************************************//**
- * 
+ * Initialize the gui abstraction using GTK+2.
+ *
+ *	This function initializes our GUI abstraction (gui)
+ *	as a GTK+ gui & links it with the program's core-data.
+ *
+ *	NOTE:	For details about the fields: gui->envLang
+ *		and gui->quitOnDestroyAppWindow, consult
+ *		the comments of the following functions:
+ *			on_destroy_appWindow()
+ *			gui_reload_gtkGladeFile()
+ *			on_activate_miEnglish()
+ *			on_activate_miGreek()
+ *			on_activate_miEnvLang()
+ *			on_activate_miQuit()
  *****************************************************
  */
-static gboolean gui_init( Gui *gui, const Core *core )
+static gboolean gui_init_as_gtk2(
+	Gui		*gui,		/* our (barely) GUI abstraction */
+	const Core	*core,		/* for linking gui to app's core-data */
+	int		*argc,		/* needed by GTK+ during initialization */
+	char		**argv[],	/* needed by GTK+ during initialization */
+	const gchar	*fnameGladeFile	/* glade-file defining our GTK+ resources */
+	)
 {
 	/* sanity checks */
-	if ( !gui || !core ) {
+	if ( !gui || !core || !argc || !argv || !fnameGladeFile ) {
 		return FALSE;
 	}
 
+	/* start fresh */
 	memset( gui, 0, sizeof(Gui) );
 
+	/* GTK+2 specific initializations */
+	if ( !gtk_init_check( argc, argv ) ) {
+		DBG_STDERR_MSG( "(fatal error) gtk+ not inited!" );
+		return FALSE;
+	}
+	if ( !gui_load_gtkGladeFile(gui, fnameGladeFile) ) {
+		DBG_STDERR_MSG( "(fatal error) gui resources not loaded!" );
+		return FALSE;
+	}
+
+	/*
+	 * GUI-abstraction specific initializations
+	 */
+
+	/* initially, destruction of main window results in program-termination */
 	gui->quitOnDestroyAppWindow = TRUE;
 
-	/* save original LANG var */
+	/* get and save the original value of the environment variable LANG */
 	gui->envLang = (gchar *) g_getenv("LANG");
-
 	if ( !gui->envLang ) {
 		g_setenv( "LANG", "en", TRUE );
 		DBG_GUI_ERRMSG(
@@ -2777,16 +2858,18 @@ static gboolean gui_init( Gui *gui, const Core *core )
 The GUI language falled back to ENGLISH.")
 		);
 	}
+	dbg_print_info( "env-var LANG: %s\n", g_getenv("LANG") );
 
+	/* link gui with the core-data of the program */
 	gui->linkToCoreData = (Core *) core;
 
-	dbg_print_info( "env-var LANG: %s\n", g_getenv("LANG") );
 
 	return TRUE;
 }
 
 /*************************************************//**
- * 
+ * Cleanup core-data of the program.
+ * This function is called before program termination.
  *****************************************************
  */
 static void core_cleanup( Core *core )
@@ -2804,7 +2887,19 @@ static void core_cleanup( Core *core )
 }
 
 /*************************************************//**
- * 
+ * Initialize the core-data of the program.
+ *
+ *	As core-data I define the minimum information
+ *	needed for the program to be operational even
+ *	without a GUI.
+ *
+ *	This may prove handy if we decide later on to
+ *	implement a fallback vanilla text-interface,
+ *	in case the GUI fails to get initialized.
+ *
+ *	For this little demo program, the core-data
+ *	consist of just a GLib random-generator and
+ *	the final outcome after rolling the die.
  *****************************************************
  */
 static gboolean core_init( Core *core )
@@ -2844,30 +2939,18 @@ int main( int argc, char **argv )
 		goto cleanup_and_exit_failure;
 	}
 
-	/* init gui */
-	if ( !gtk_init_check( &argc, &argv ) ) {
-		DBG_STDERR_MSG( "(fatal error) gtk+ not inited!" );
-		goto cleanup_and_exit_failure;
-	}
-	if ( !gui_init(&gui, &core) ) {
+	/* init the gui as GTK+ */
+	if ( !gui_init_as_gtk2(&gui, &core, &argc, &argv, FNAME_GLADE) ) {
 		DBG_STDERR_MSG( "(fatal error) gui not inited!" );
 		goto cleanup_and_exit_failure;
 	}
-	if ( !gui_load_gtkGladeFile(&gui, FNAME_GLADE) ) {
-		DBG_STDERR_MSG( "(fatal error) gui not loaded!" );
-		goto cleanup_and_exit_failure;
+
+	/* display the main-window of the application, and all its children */
+	if ( gui.appWindow ) {
+		gtk_widget_show_all( gui.appWindow );
 	}
 
-	/* display the main-window of the application, and all its children */
-	if ( gui.appWindow )
-		gtk_widget_show_all( gui.appWindow );
-
-	/* display the main-window of the application, and all its children */
-	if ( gui.appWindow )
-		gtk_widget_show_all( gui.appWindow );
-
-
-	/* start GTK+ event loop */
+	/* start the GTK+ event loop */
 	if ( gui.appWindow )
 		gtk_main();
 

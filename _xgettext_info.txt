@@ -1,3 +1,22 @@
+/*
+ * Quick guide for localization with the GNU-gettext library
+ * ---------------------------------------------------------
+ * First I list all the required steps, then I explain them in more detail
+ * (note that alternatively, POEDIT can be used for stpes 2, 3 and 4)
+ */
+
+xgettext -k_ -kN_ -d gtk_dice -s -o default.pot gtk_dice.c gui/dice.glade
+
+msginit -l el -o gtk_dice.po -i default.pot
+or
+msgmerge -s -U gtk_dice.po default.pot
+
+translate dice.po
+
+msgfmt -c -v -o gtk_dice.mo gtk_dice.po
+
+move gtk_dice.mo to the appropriate directory & set the LANG environment variabale
+
 /* ------------------------------------------------
  * STEP-1:
  * 	Extract translatable strings from sources
@@ -27,10 +46,10 @@ xgettext -k_ -kN_ -d gtk_dice -s -o default.pot gtk_dice.c gui/dice.glade
  * Here is an example, defining & initializing localization stuff,
  * according to the documentation of the GNU-gettext & GTK+2 APIs:
  * 	...
- *	/* order MATTERS */
+ *	/* for libraries, order MATTERS */
  *	#define GETTEXT_PACKAGE	"gtk_dice"	/* our text-domain */
  *	#define LOCALEDIR	"lang"		/* our locale-directory */
- *	#include <glib/gi18n.h>			/* this MUST come last */
+ *	#include <glib/gi18n.h>			/* for libs this MUST come last */
  *	...
  *	#include <gtk.h>	/* order of this doesn't really matter */
  *	...
@@ -99,9 +118,12 @@ msgmerge -s -U gtk_dice.po default.pot
 
 /*
  * The above command updates the contents of the file "gtk_dice.po" (flag -U)
- * according to the contents of the file "default.po". This means that any
- * extra strings found in the latter are added to the former, while any extra
- * strings in the latter are 
+ * according to the contents of the file "default.po". This means that the
+ * strings found in the latter are added to the former, while any extra
+ * strings in the latter are either or marked for comments.
+ *
+ * This step is not meant to follow Step-2a. The very first time we follow
+ * Step-1, and then when we want to update our translation we follow Step-2b.
  */
 
 /* ----------------------------------------------------------
@@ -184,5 +206,3 @@ msgfmt -c -v -o gtk_dice.mo gtk_dice.po
  * "Properties | [Advanced] | [Environment variables]" and add it either in the
  * "User" area (just your account) or in the "System" area (all accounts).
  */
-
-msgmerge -s -U oriya.po hello-new.pot
