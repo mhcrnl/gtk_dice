@@ -177,21 +177,30 @@
                         <property name="can_focus">False</property>
                         <property name="has_tooltip">True</property>
                         <property name="tooltip_text" translatable="yes"> This option switches the GUI language according
- to the value defined by the environment variable 
- LANG.
+ to the values of the environment variables LANG 
+ and LANGUAGE.
 
- If LANG is not set or if no translation data is
- available for the value it defines, then English
- is used as the default fallback language.
+ If they are not set, or if there are no translation
+ data available for the locale they define, then the 
+ English language is used as fallback.
 
  The menu-entry is disabled when the program
- starts, because the language dictated by LANG
- is already active, regardless of possible fallback
- to the English language.
+ starts, because the language dictated by LANG 
+ and LANGUAGE is already active, regardless of
+ possible fallbacks.
  
  A fallback does not visually disable Engish in the
- menu, thus making it clear that it is currently in
- effect.</property>
+ menu (the user can select it) so it is clear that
+ English was not explicitly selected by the user.
+
+ Please not that both LANG &amp; LANGUAGE must
+ be defined before program launch, otherwise a
+ fallback to English will occur.
+
+ For example, if LANG is set to "el_GR.UTF-8"
+ and LANGUAGE to "el" (both without quotes)
+ in the environment, then the program will use
+ the Greek language immediately.</property>
                         <property name="use_underline">True</property>
                         <property name="image">imgFlagEnvLang</property>
                         <property name="use_stock">False</property>

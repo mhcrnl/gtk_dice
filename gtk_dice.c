@@ -4,7 +4,7 @@
  *
  *	DESCRIPTION:	Small GTK+2 demo, faking an animation of a die (2D & 3D).
  *	AUTHOR:		migf1 <mig_f1@hotmail.com>
- *	WEBSITE:	http://x-karagiannis.gr/prg/
+ *	WEBSITE:	https://github.com/migf1/gtk_dice | http://x-karagiannis.gr/prg/
  *	LICENSE:	Free for all
  *
  *	PROGR.LANG:	C (ANSI 89 / ISO C90)
@@ -20,6 +20,12 @@
  *				GTK+2 v2.24.8 *all-in-one* bundle
  *				MinGW32 GCC v4.70
  *				Glade v3.8.3 (*not* v3.14.x, that's for GTK+3)
+ *			Tested on:
+ *				Windows XP SP3	(32bit)
+ *				Windows 7	(64bit)
+ *				Ubuntu 1.10	(32bit)
+ *
+ *	Please read also the file README.txt for more info, links, etc.
  */
 
 /* -------------------------------
@@ -223,9 +229,6 @@ typedef struct GuiStatusBar {
 
 typedef struct GuiLocaleEnv {
 	gchar locale[MAXSIZ_LOCALE];
-/*	gchar *varLcAll;
-	gchar *varLcCtype;
-*/
 	gchar *varLang;
 	gchar *varLanguage;	/* GTK+ does not check this on Win32 */
 }GuiLocaleEnv;
@@ -236,8 +239,6 @@ typedef struct GuiLocaleEnv {
  */
 typedef struct Gui {
 	gboolean	quitOnDestroyAppWindow;
-/*	gchar		*envLangVar;
-*/
 	GuiLocaleEnv	callerLocaleEnv;
 	GuiWindow	*appWindow;
 	GuiDialog	*dlgAbout;
@@ -288,32 +289,110 @@ static void dbg_print_info( char *fmtxt, ... )
 }
 
 /*************************************************//**
- *
+ * Print info about GUI's inherited locale environment,
+ * only if 'global_debugOn' is TRUE.
  *****************************************************
  */
-static void dbg_guiLocaleEnv_print(
-	const GuiLocaleEnv	*guiLocaleEnv,
-	const gchar		*title
-	)
+static void dbg_print_gui_callerLocaleEnv( const Gui *gui, const gchar *title )
+{
+	/* sanity check */
+	if ( !gui ) {
+		return;
+	}
+
+	if ( title ) {
+		dbg_print_info( "%s\n", title );
+	}
+	dbg_print_info( "locale:\t\t%s\n", gui->callerLocaleEnv.locale );
+	dbg_print_info( "LANG:\t\t%s\n", gui->callerLocaleEnv.varLang );
+	dbg_print_info( "LANGUAGE:\t%s\n", gui->callerLocaleEnv.varLanguage );
+	dbg_print_info( "%c", '\n' );
+
+}
+
+/*************************************************//**
+ * Print info about the current locale environment,
+ * only if 'global_debugOn' is TRUE.
+ *****************************************************
+ */
+static void dbg_print_locale_environment( const gchar *title )
 {
 	if ( title ) {
 		dbg_print_info( "%s\n", title );
 	}
 
-	/* if no guiLocaleEnv is specified, print the current locale environment */
-	if ( !guiLocaleEnv ) {
-		dbg_print_info( "locale:\t\t%s\n", setlocale(LC_ALL, NULL) );
-		dbg_print_info( "LANG:\t\t%s\n", g_getenv("LANG") );
-		dbg_print_info( "LANGUAGE:\t%s\n", g_getenv("LANGUAGE") );
-		dbg_print_info( "%c", '\n' );
+	dbg_print_info( "locale:\t\t%s\n", setlocale(LC_ALL, NULL) );
+	dbg_print_info( "LANG:\t\t%s\n", g_getenv("LANG") );
+	dbg_print_info( "LANGUAGE:\t%s\n", g_getenv("LANGUAGE") );
+	dbg_print_info( "%c", '\n' );
+
+}
+
+/*************************************************//**
+ * Initialize localization via the GNU-gettext library.
+ *****************************************************
+ */
+static gboolean init_localization_gettext(
+	const char *transTextDomain,
+	const char *localeDir,
+	const char *outCodeset
+	)
+{
+	/* sanity checks */
+	if ( !transTextDomain || !localeDir || !outCodeset ) {
+		return FALSE;
+	}
+
+	/* set the current locale to system default & save it */
+	setlocale( LC_ALL, "" );
+
+	/* ensure that the translated messages of the specified text-domain
+	 * will be searched in the specified locale-directory rather than in
+	 * the system locale database
+	 */
+	if ( !bindtextdomain(transTextDomain, localeDir) ) {
+		return FALSE;
+	}
+
+	/* */
+	if ( !bind_textdomain_codeset(transTextDomain, outCodeset) ) {
+		return FALSE;
+	}
+
+	/* set the current default text-domain to the specified one */
+	if ( !textdomain(transTextDomain) ) {
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+/*************************************************//**
+ * Set the specified arguments as the current locale environment
+ *****************************************************
+ */
+static void set_locale_environment(
+	const gchar *locale,
+	const gchar *lang,
+	const gchar *language
+	)
+{
+	/* sanity checks */
+	if ( !locale || !lang || !language ) {
 		return;
 	}
 
-	dbg_print_info( "locale:\t\t%s\n", guiLocaleEnv->locale );
-	dbg_print_info( "LANG:\t\t%s\n", guiLocaleEnv->varLang );
-	dbg_print_info( "LANGUAGE:\t%s\n", guiLocaleEnv->varLanguage );
-	dbg_print_info( "%c", '\n' );
+	setlocale( LC_ALL, locale );
 
+	if ( g_getenv("LANG") ) {
+		g_unsetenv("LANG");
+	}
+	g_setenv("LANG", lang, TRUE);
+
+	if ( g_getenv("LANGUAGE") ) {
+		g_unsetenv("LANGUAGE");
+	}
+	g_setenv( "LANGUAGE", language, TRUE );
 }
 
 /*************************************************//**
@@ -806,26 +885,18 @@ static void on_activate_miEnglish( GtkWidget *menuItem, Gui *gui )
 		return;
 	}
 
-	/* force English locale */
-	setlocale( LC_ALL, STR_EN_LOCALE );
-	if ( g_getenv("LANG") ) {
-		g_unsetenv("LANG");
-	}
-	g_setenv("LANG", STR_EN_LOCALE_LANG, TRUE);
+	/* set English locale environment, reload GUI resources, update menu-entries */
 
-	if ( g_getenv("LANGUAGE") ) {
-		g_unsetenv("LANGUAGE");
-	}
-	g_setenv( "LANGUAGE", STR_EN_LOCALE_LANGUAGE, TRUE );
-
-	gui_reload_gtkGladeFile(gui, FNAME_GLADE);
-
+	set_locale_environment(
+		STR_EN_LOCALE,
+		STR_EN_LOCALE_LANG,
+		STR_EN_LOCALE_LANGUAGE
+		);
+	gui_reload_gtkGladeFile( gui, FNAME_GLADE );
 	gui_disable_langmenu_item_as_radio( gui, gui->menu.itemEnglish );
 	gtk_widget_show_all( gui->appWindow );
 
-	dbg_guiLocaleEnv_print( NULL, "--- Current Locale Environmet ---" );
-	dbg_print_info( "env-var LANG: %s\n", g_getenv("LANG") );
-	dbg_print_info( "env-var LANGUAGE: %s\n", g_getenv("LANGUAGE") );
+	dbg_print_locale_environment( "Locale Environmet changed to English:" );
 
 	return;
 }
@@ -862,26 +933,18 @@ static void on_activate_miGreek( GtkWidget *menuItem, Gui *gui )
 	}
 
 
-	/* force Greek locale */
-	setlocale(LC_ALL, STR_EL_LOCALE);
-	if ( g_getenv("LANG") ) {
-		g_unsetenv( "LANG" );
-	}
-	g_setenv("LANG", STR_EL_LOCALE_LANG, TRUE);
+	/* set Greek locale environment, reload GUI resources, update menu-entries */
 
-	if ( g_getenv("LANGUAGE") ) {
-		g_unsetenv( "LANGUAGE" );
-	}
-	g_setenv("LANGUAGE", STR_EL_LOCALE_LANGUAGE, TRUE);
-
+	set_locale_environment(
+		STR_EL_LOCALE,
+		STR_EL_LOCALE_LANG,
+		STR_EL_LOCALE_LANGUAGE
+		);
 	gui_reload_gtkGladeFile(gui, FNAME_GLADE);
-
 	gui_disable_langmenu_item_as_radio( gui, gui->menu.itemGreek );
 	gtk_widget_show_all( gui->appWindow );
 
-	dbg_guiLocaleEnv_print( NULL, "--- Current Locale Environmet ---" );
-	dbg_print_info( "env-var LANG: %s\n", g_getenv("LANG") );
-	dbg_print_info( "env-var LANGUAGE: %s\n", g_getenv("LANGUAGE") );
+	dbg_print_locale_environment( "Locale Environmet changed to Greek:" );
 
 	return;
 }
@@ -925,22 +988,18 @@ static void on_activate_miEnvLang( GtkWidget *menuItem, Gui *gui )
 		return;
 	}
 	if ( !gui->appWindow ) {
-		DBG_GUI_ERRMSG(
-			gui->appWindow,
-			_("Invalid GUI element (gui->appWindow)")
-			);
+		DBG_GUI_ERRMSG( NULL, _("Invalid GUI element (gui->appWindow)") );
 		return;
 	}
 
-	if ( !gui->callerLocaleEnv.locale ) {
-		setlocale( LC_ALL, STR_EN_LOCALE );
-	}
-	else {
-		setlocale(LC_ALL, gui->callerLocaleEnv.locale);
-	}
-	g_unsetenv( "LANG" );
-	if ( !gui->callerLocaleEnv.varLang ) {
-		g_setenv( "LANG", STR_EN_LOCALE_LANG, TRUE );
+	if ( !gui->callerLocaleEnv.locale
+	|| !gui->callerLocaleEnv.varLang || !gui->callerLocaleEnv.varLanguage
+	){
+		set_locale_environment(
+			STR_EN_LOCALE,
+			STR_EN_LOCALE_LANG,
+			STR_EN_LOCALE_LANGUAGE
+			);
 		DBG_GUI_ERRMSG(
 			gui->appWindow,
 			_("No locale environment was found.\n\
@@ -948,24 +1007,19 @@ ENGLISH is used as fallback language.")
 		);
 	}
 	else {
-		g_setenv( "LANG", gui->callerLocaleEnv.varLang, TRUE );
+		set_locale_environment(
+			gui->callerLocaleEnv.locale,
+			gui->callerLocaleEnv.varLang,
+			gui->callerLocaleEnv.varLanguage
+			);
 	}
 
-	g_unsetenv( "LANGUAGE" );
-	if ( !gui->callerLocaleEnv.varLang ) {
-		g_setenv( "LANGUAGE", STR_EN_LOCALE_LANGUAGE, TRUE );
-	}
-	else {
-		g_setenv( "LANGUAGE", gui->callerLocaleEnv.varLanguage, TRUE );
-	}
 	gui_reload_gtkGladeFile(gui, FNAME_GLADE);
 
 	gui_disable_langmenu_item_as_radio( gui, gui->menu.itemEnvLang );
 	gtk_widget_show_all( gui->appWindow );
 
-	dbg_guiLocaleEnv_print( NULL, "--- Current Locale Environmet ---" );
-	dbg_print_info( "env-var LANG: %s\n", g_getenv("LANG") );
-	dbg_print_info( "env-var LANGUAGE: %s\n", g_getenv("LANGUAGE") );
+	dbg_print_locale_environment( "Locale Environmet changed to System's:" );
 
 	return;
 }
@@ -2664,42 +2718,45 @@ static gboolean gui_init_appWindow( Gui *gui, GtkBuilder *builder )
 }
 
 /*************************************************//**
- * Initialize localization via the GNU-gettext library.
+ *
  *****************************************************
  */
-static gboolean init_gettext_localization(
-	const char *transTextDomain,
-	const char *localeDir,
-	const char *outCodeset
-	)
+static void gui_get_caller_locale_environment( Gui *gui )
 {
-	/* sanity checks */
-	if ( !transTextDomain || !localeDir || !outCodeset ) {
-		return FALSE;
+	gchar *temp = NULL;
+
+	if ( !gui ) {
+		return;
 	}
 
-	/* set the current locale to system default & save it */
-	setlocale( LC_ALL, "" );
+	temp = setlocale(LC_ALL, NULL);
+	strncpy(gui->callerLocaleEnv.locale, temp, MAXSIZ_LOCALE-1);
+	gui->callerLocaleEnv.varLang	= (gchar *) g_getenv("LANG");
+	gui->callerLocaleEnv.varLanguage= (gchar *) g_getenv("LANGUAGE");
 
-	/* ensure that the translated messages of the specified text-domain
-	 * will be searched in the specified locale-directory rather than in
-	 * the system locale database
-	 */
-	if ( !bindtextdomain(transTextDomain, localeDir) ) {
-		return FALSE;
+	if ( !gui->callerLocaleEnv.locale
+	|| !gui->callerLocaleEnv.varLang || !gui->callerLocaleEnv.varLanguage
+	){
+#if 1
+		set_locale_environment(
+			STR_EN_LOCALE,
+			STR_EN_LOCALE_LANG,
+			STR_EN_LOCALE_LANGUAGE
+			);
+#else
+		setlocale( LC_ALL, STR_EN_LOCALE );
+		g_setenv( "LANG", STR_EN_LOCALE_LANG, TRUE );
+		g_setenv( "LANGUAGE", STR_EN_LOCALE_LANGUAGE, TRUE );
+#endif
+		DBG_GUI_ERRMSG(
+			NULL,
+			_("No locale environment was found.\n\
+ENGLISH is used as fallback language.")
+		);
+
 	}
 
-	/* */
-	if ( !bind_textdomain_codeset(transTextDomain, outCodeset) ) {
-		return FALSE;
-	}
-
-	/* set the current default text-domain to the specified one */
-	if ( !textdomain(transTextDomain) ) {
-		return FALSE;
-	}
-
-	return TRUE;
+	return;
 }
 
 #if DISABLED
@@ -2849,7 +2906,7 @@ static void gui_cleanup( Gui *gui )
 		return;
 	}
 
-	dbg_guiLocaleEnv_print( NULL, "___ Local Locale Environment ___");
+	dbg_print_locale_environment( "___ Local Locale Environment ___");
 
 	/* restore locale environment of the caller */
 	setlocale(LC_ALL, gui->callerLocaleEnv.locale);
@@ -2887,8 +2944,6 @@ static gboolean gui_init_as_gtk2(
 	const gchar	*fnameGladeFile	/* glade-file defining our GTK+ resources */
 	)
 {
-	gchar *temp = NULL;
-
 	/* sanity checks */
 	if ( !gui || !core || !argc || !argv || !fnameGladeFile ) {
 		return FALSE;
@@ -2903,25 +2958,8 @@ static gboolean gui_init_as_gtk2(
 	/* ensure gui abstraction starts fresh */
 	memset( gui, 0, sizeof(Gui) );
 
-	/* get and save the caller's original locale environment */
-	temp = setlocale(LC_ALL, NULL);
-	strncpy(gui->callerLocaleEnv.locale, temp, MAXSIZ_LOCALE-1);
-	gui->callerLocaleEnv.varLang	= (gchar *) g_getenv("LANG");
-	gui->callerLocaleEnv.varLanguage= (gchar *) g_getenv("LANGUAGE");
-
-	if ( !gui->callerLocaleEnv.locale || !gui->callerLocaleEnv.varLang ) {
-		setlocale( LC_ALL, STR_EN_LOCALE );
-		g_setenv( "LANG", STR_EN_LOCALE_LANG, TRUE );
-		g_setenv( "LANGUAGE", STR_EN_LOCALE_LANGUAGE, TRUE );
-		DBG_GUI_ERRMSG(
-			NULL,
-			_("No locale environment was found.\n\
-ENGLISH is used as fallback.")
-		);
-
-	}
-	dbg_print_info( "env-var LANG: %s\n", g_getenv("LANG") );
-	dbg_print_info( "env-var LANGUAGE: %s\n", g_getenv("LANGUAGE") );
+	/* get and save the caller's locale environment */
+	gui_get_caller_locale_environment( gui );
 
 	/* initially, destruction of main window results in program-termination */
 	gui->quitOnDestroyAppWindow = TRUE;
@@ -3000,7 +3038,7 @@ int main( int argc, char **argv )
 /*	memset( &gui, 0, sizeof(Gui) );
 */
 	/* prepare GNU-gettext internationalization */
-	if ( !init_gettext_localization( GETTEXT_PACKAGE, LOCALEDIR, OUTCODESET) ) {
+	if ( !init_localization_gettext( GETTEXT_PACKAGE, LOCALEDIR, OUTCODESET) ) {
 		DBG_STDERR_MSG( "(fatal error) localization failed!" );
 		goto cleanup_and_exit_failure;
 	}
@@ -3016,8 +3054,8 @@ int main( int argc, char **argv )
 		DBG_STDERR_MSG( "(fatal error) gui not inited!" );
 		goto cleanup_and_exit_failure;
 	}
-	dbg_guiLocaleEnv_print( &gui.callerLocaleEnv, "--- GUI Caller Locale Environmet ---" );
-	dbg_guiLocaleEnv_print( NULL, "--- Current Locale Environmet ---" );
+	dbg_print_gui_callerLocaleEnv( &gui, "Caller Locale Environmet was:" );
+	dbg_print_locale_environment( "GUI Locale Environmet set to:" );
 
 	/* display the main-window of the application, and all its children */
 	if ( gui.appWindow ) {
