@@ -23,7 +23,7 @@ BUILT INFO:	Developed on Windows XP SP3, using:
 		Tested on:
 			Windows XP SP3	(32bit)
 			Windows 7	(64bit)
-			Ubuntu 1.10	(32bit)
+			Ubuntu 11.10	(32bit)
 
 USEFUL LINKS:	[ All platforms ]
 		GTK+ website:
