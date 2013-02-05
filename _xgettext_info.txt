@@ -2,7 +2,7 @@
  * Quick guide for localization with the GNU-gettext library
  * ---------------------------------------------------------
  * First I list all the required steps, then I explain them in more detail
- * (note that alternatively, POEDIT can be used for stpes 2, 3 and 4)
+ * (note that alternatively, POEDIT can be used for steps 2, 3 and 4)
  */
 
 xgettext -k_ -kN_ -d gtk_dice -s -o default.pot gtk_dice.c gui/dice.glade

@@ -3,8 +3,8 @@
  *	----------------
  *
  *	DESCRIPTION:	Small GTK+2 demo, faking an animation of a die (2D & 3D).
- *	AUTHOR:		migf1 <mig_f1@hotmail.com>
- *	WEBSITE:	https://github.com/migf1/gtk_dice | http://x-karagiannis.gr/prg/
+ *	AUTHOR:		migf1 <mig_f1@hotmail.com> | http://x-karagiannis.gr/prg/
+ *	WEBSITE:	https://github.com/migf1/gtk_dice
  *	LICENSE:	Free for all
  *
  *	PROGR.LANG:	C (ANSI 89 / ISO C90)
@@ -89,12 +89,12 @@
 #define SETTINGS_DEF2D_STEPDELAY	30000L
 
 /* GUI strings that are dynamically added/updated,
- * regardless their initial values specified in the
- * FNAME_GLADE file.
+ * regardless their initial values specified in
+ * the Glade file: FNAME_GLADE.
  * Only those enclosed in _() are translatable.
  */
 #define TXT_APP_NAME		_("GTK+2 Demo - Die")
-#define TXT_APP_VERSION		"0.2"
+#define TXT_APP_VERSION		"0.2a"
 #define TXT_APP_DESCRIPTION	_("Small GTK+2 Demo\nfaking 3D/2D die-animation")
 #define TXT_APP_COPYRIGHT	"copyright (c) 2013"
 #define TXT_APP_LICENSE		_("Free for all")
@@ -3037,6 +3037,7 @@ int main( int argc, char **argv )
 	global_debugOn = TRUE;
 /*	memset( &gui, 0, sizeof(Gui) );
 */
+
 	/* prepare GNU-gettext internationalization */
 	if ( !init_localization_gettext( GETTEXT_PACKAGE, LOCALEDIR, OUTCODESET) ) {
 		DBG_STDERR_MSG( "(fatal error) localization failed!" );
