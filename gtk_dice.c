@@ -2,28 +2,28 @@
  *	DIE - GTK+2 Demo
  *	----------------
  *
- *	DESCRIPTION:	Small GTK+2 demo, faking an animation of a die (2D & 3D).
- *	AUTHOR:		migf1 <mig_f1@hotmail.com> | http://x-karagiannis.gr/prg/
- *	WEBSITE:	https://github.com/migf1/gtk_dice
- *	LICENSE:	Free for all
+ *	DESCRIPTION:    Small GTK+2 demo, faking an animation of a die (2D & 3D).
+ *	AUTHOR:         migf1 <mig_f1@hotmail.com> | http://x-karagiannis.gr/prg/
+ *	WEBSITE:        https://github.com/migf1/gtk_dice
+ *	LICENSE:        Free for all
  *
- *	PROGR.LANG:	C (ANSI 89 / ISO C90)
- *	PLATFORM:	Cross-platfrom
+ *	PROGR.LANG:     C (ANSI 89 / ISO C90)
+ *	PLATFORM:       Cross-platfrom
  *
- *	REQUIREMENTS:	for Execution:
+ *	REQUIREMENTS:   for Execution:
  *				Runtime of GTK+ v2.24.8 or newer (*not* GTK+3)
  *			for Compilation:
  *				GTK+ v2.24.8 or newer DevPackages (*not* GTK+3)
  *				(they include the runtime)
  *
- *	BUILT INFO:	Developed & tested on Windows XP SP3, using:
+ *	BUILT INFO:     Developed & tested on Windows XP SP3, using:
  *				GTK+2 v2.24.8 *all-in-one* bundle
  *				MinGW32 GCC v4.70
  *				Glade v3.8.3 (*not* v3.14.x, that's for GTK+3)
  *			Tested on:
- *				Windows XP SP3	(32bit)
- *				Windows 7	(64bit)
- *				Ubuntu 11.10	(32bit)
+ *				Windows XP SP3  (32bit)
+ *				Windows 7       (64bit)
+ *				Ubuntu 11.10    (32bit)
  *
  *	Please read also the file README.txt for more info, links, etc.
  */
@@ -36,9 +36,9 @@
 /* prepare GLib's i18n localization via GNU-gettext (see Useful-Links in README.txt)
  * NOTE: to be safe, always set GETTEXT_PACKAGE before including <glib/gi18n.h>
  */
-#define GETTEXT_PACKAGE  "gtk_dice"     /* our app's translation text-domain */
-#define LOCALEDIR        "lang"	        /* locale directory (to host translations) */
-#define OUTCODESET       "UTF-8"        /* desired output-codeset for translations */
+#define GETTEXT_PACKAGE  "gtk_dice"   /* our app's translation text-domain */
+#define LOCALEDIR        "lang"       /* locale directory (to host translations) */
+#define OUTCODESET       "UTF-8"      /* desired output-codeset for translations */
 #include <glib/gi18n.h>
 
 /* we need this for opening http:// and mailto: links when OS is Windows */
@@ -79,7 +79,7 @@
 #define NFRAMES_2D                6
 
 /* default settings for 3d rolling-effect */
-#define SETTINGS_DEF3D_MAXSPINS	  60
+#define SETTINGS_DEF3D_MAXSPINS   60
 #define SETTINGS_DEF3D_BASEDELAY  7000L
 #define SETTINGS_DEF3D_STEPDELAY  400L
 
@@ -116,19 +116,19 @@
  * @param appWindow The owner-window of the alert-box (may be NULL).
  * @param errmsg The message to be displayed.
  */
-#define DBG_GUI_ERRMSG( appWindow, errmsg )                   \
-do {                                                          \
-	gchar dbgMsgOut[MAXSIZ_DBGMSG] = {'\0'};              \
-	if ( !global_debugOn )                                \
-		break;                                        \
-	g_snprintf(                                           \
-		dbgMsgOut,                                    \
-		MAXSIZ_DBGMSG,                                \
-		_("File\t: %s\nFunc\t: %s\nLine\t: %d\n\n%s"),\
-		__FILE__, __func__,  __LINE__,                \
-		(const gchar *)(errmsg) ? errmsg : "\0"       \
-		);                                            \
-	myGtk_alert_box( GTK_WIDGET(appWindow), dbgMsgOut );  \
+#define DBG_GUI_ERRMSG( appWindow, errmsg )                     \
+do {                                                            \
+	gchar dbgMsgOut[MAXSIZ_DBGMSG] = {'\0'};                \
+	if ( !global_debugOn )                                  \
+		break;                                          \
+	g_snprintf(                                             \
+		dbgMsgOut,                                      \
+		MAXSIZ_DBGMSG,                                  \
+		_("File\t: %s\nFunc\t: %s\nLine\t: %d\n\n%s"),  \
+		__FILE__, __func__,  __LINE__,                  \
+		(const gchar *)(errmsg) ? errmsg : "\0"         \
+		);                                              \
+	myGtk_alert_box( GTK_WIDGET(appWindow), dbgMsgOut );    \
 } while(0)
 
 /**
@@ -247,7 +247,7 @@ typedef struct Gui {
 	GuiDieArea3d  dieArea3d;	/* unused */
 	GuiSettings   settings;
 	GuiStatusBar  statusBar;
-	Core	      *linkToCoreData;
+	Core          *linkToCoreData;
 }Gui;
 
 /* -------------------------------
@@ -469,7 +469,7 @@ static void myGtk_alert_box(
  */
 static gboolean myGtk_horzSlider_set(
 	GuiHorzSlider  *hslider,
-	gdouble	        value,     /* current value */
+	gdouble         value,     /* current value */
 	gdouble         minVal,    /* lower bound */
 	gdouble         maxVal,    /* upper bound */
 	gdouble         stepInc,   /* step increment */
@@ -487,13 +487,13 @@ static gboolean myGtk_horzSlider_set(
 		return FALSE;
 	}
 
-/*	hslider->value	= value;
+/*	hslider->value   = value;
 */
-	hslider->minVal	= minVal;
-	hslider->maxVal	= maxVal;
-	hslider->stepInc= stepInc;
-	hslider->pageInc= pageInc;
-/*	hslider->digits	= digits;
+	hslider->minVal  = minVal;
+	hslider->maxVal  = maxVal;
+	hslider->stepInc = stepInc;
+	hslider->pageInc = pageInc;
+/*	hslider->digits	 = digits;
 */
 	gtk_scale_set_digits( GTK_SCALE(hslider->widget), digits );
 	hslider->digits = gtk_scale_get_digits( GTK_SCALE(hslider->widget) );
@@ -589,7 +589,7 @@ static gboolean gui_has_default2d_settings( const Gui *gui )
 	}
 	settings = (GuiSettings *) &gui->settings;
 	if ( !settings->chkbtnRollEffectWidget
-	|| !settings->hsliderMaxSteps.widget || !settings->hsliderMaxSteps.adjustment
+	|| !settings->hsliderMaxSteps.widget  || !settings->hsliderMaxSteps.adjustment
 	|| !settings->hsliderBaseDelay.widget || !settings->hsliderBaseDelay.adjustment
 	|| !settings->hsliderStepDelay.widget || !settings->hsliderStepDelay.adjustment
 	){
@@ -597,7 +597,7 @@ static gboolean gui_has_default2d_settings( const Gui *gui )
 		return FALSE;
 	}
 
-	return 	gtk_toggle_button_get_active(
+	return  gtk_toggle_button_get_active(
 			GTK_TOGGLE_BUTTON(settings->chkbtnRollEffectWidget)
 			)
 		&& settings->hsliderMaxSteps.value == SETTINGS_DEF2D_MAXSPINS
@@ -642,7 +642,6 @@ static void gui_set_default3d_settings( Gui *gui )
 		&settings->hsliderStepDelay,
 		SETTINGS_DEF3D_STEPDELAY
 		);
-
 }
 
 /*************************************************//**
@@ -861,7 +860,7 @@ static gboolean on_delete_event_appWindow(
  * is called, otherwise the GTK+ main-loop keeps going on.
  *
  * See also:
- * 	gui_reload_gtkGladeFile()
+ *      gui_reload_gtkGladeFile()
  *	on_activate_miEnglish()
  *	on_activate_miGreek()
  *	on_activate_miEnvLang()
@@ -1220,7 +1219,7 @@ static void on_clicked_btnRoll(
 	gchar      *fmtText = NULL;       /* for creating formatted text via snprintf() */
 	gchar       msgStatusbar[MAXSIZ_FNAME] = {'\0'};  /* msg displayed on status-bar */
 	gchar       fnameFrame[MAXSIZ_FNAME]   = {'\0'};  /* next image-frame to load */
-	gboolean    isAnim2d = FALSE;	  /* are we currently in 2d or 3d animation mode? */
+	gboolean    isAnim2d = FALSE;     /* are we currently in 2d or 3d animation mode? */
 	gboolean    hasNextFrame = TRUE;  /* are images of current animation exhausted? */
 	gint        maxFrames;            /* 3d uses NFRAMES_3D images, 2d uses NFRAMES_2D */
 	gint        i = 0, iFrame = 0;    /* current step & image-frame during animation */
@@ -1285,9 +1284,9 @@ static void on_clicked_btnRoll(
 			msgStatusbar,
 			MAXSIZ_FNAME,
 			TXTF_STATUSBAR_ONROLL,
-			i,		/* current step */
-			iFrame,		/* current image-frame */
-			baseDelay	/* current base-delay + friction */
+			i,              /* current step */
+			iFrame,         /* current image-frame */
+			baseDelay       /* current base-delay + friction */
 			);
 		gtk_statusbar_push(
 			GTK_STATUSBAR(gui->statusBar.widget),
@@ -1477,7 +1476,7 @@ static gboolean on_button_press_event_evboxImg3d(
 	char         tmpString[MAXSIZ_FNAME] = {'\0'};
 	gint         i = 0;
 	gulong       delay = 2500;      /* standard delay between shuffles (microsecs) */
-	const gulong delayStep = 5000;	/* step for progressive delay (microsecs) */
+	const gulong delayStep = 5000;  /* step for progressive delay (microsecs) */
 
 	/* avoid compiler warnings for unused parameters */
 	if ( !eventBox || !event ) {
@@ -1726,8 +1725,8 @@ static void on_value_changed_hsliderStepDelay(
  *****************************************************
  */
 static void on_clicked_btnSettingsDefault3d(
-	GtkWidget	*button,
-	Gui		*gui
+	GtkWidget  *button,
+	Gui        *gui
 	)
 {
 	/* avoid compiler warning for unused parameter */
@@ -1906,8 +1905,8 @@ static gboolean gui_init_settings_btnDefault3d(
  *****************************************************
  */
 static gboolean gui_init_settings_hsliderStepDelay(
-	Gui		*gui,
-	GtkBuilder	*builder
+	Gui         *gui,
+	GtkBuilder  *builder
 	)
 {
 	/* sanity checks */
@@ -1958,12 +1957,12 @@ static gboolean gui_init_settings_hsliderStepDelay(
 
 	myGtk_horzSlider_set(
 		&gui->settings.hsliderStepDelay,
-		SETTINGS_DEF3D_STEPDELAY,	/* value */
-		0,				/* minVal */
-		30000,				/* maxVal */
-		10,				/* stepInc */
-		100,				/* pageInc */
-		0				/* digits */
+		SETTINGS_DEF3D_STEPDELAY,       /* value */
+		0,                              /* minVal */
+		30000,                          /* maxVal */
+		10,                             /* stepInc */
+		100,                            /* pageInc */
+		0                               /* digits */
 		);
 
 	g_signal_connect(
@@ -1997,8 +1996,8 @@ static gboolean gui_init_settings_hsliderStepDelay(
  *****************************************************
  */
 static gboolean gui_init_settings_hsliderBaseDelay(
-	Gui		*gui,
-	GtkBuilder	*builder
+	Gui         *gui,
+	GtkBuilder  *builder
 	)
 {
 	/* sanity checks */
@@ -2049,12 +2048,12 @@ static gboolean gui_init_settings_hsliderBaseDelay(
 
 	myGtk_horzSlider_set(
 		&gui->settings.hsliderBaseDelay,
-		SETTINGS_DEF3D_BASEDELAY,	/* value */
-		300,				/* minVal */
-		64000,				/* maxVal */
-		100,				/* stepInc */
-		1000,				/* pageInc */
-		0				/* digits */
+		SETTINGS_DEF3D_BASEDELAY,       /* value */
+		300,                            /* minVal */
+		64000,                          /* maxVal */
+		100,                            /* stepInc */
+		1000,                           /* pageInc */
+		0                               /* digits */
 		);
 
 	g_signal_connect(
@@ -2088,8 +2087,8 @@ static gboolean gui_init_settings_hsliderBaseDelay(
  *****************************************************
  */
 static gboolean gui_init_settings_hsliderMaxSteps(
-	Gui		*gui,
-	GtkBuilder	*builder
+	Gui         *gui,
+	GtkBuilder  *builder
 	)
 {
 	/* sanity checks */
@@ -2137,12 +2136,12 @@ static gboolean gui_init_settings_hsliderMaxSteps(
 
 	myGtk_horzSlider_set(
 		&gui->settings.hsliderMaxSteps,
-		SETTINGS_DEF3D_MAXSPINS,	/* value */
-		12,				/* minVal */
-		128,				/* maxVal */
-		1,				/* stepInc */
-		8,				/* pageInc */
-		0				/* digits */
+		SETTINGS_DEF3D_MAXSPINS,        /* value */
+		12,                             /* minVal */
+		128,                            /* maxVal */
+		1,                              /* stepInc */
+		8,                              /* pageInc */
+		0                               /* digits */
 		);
 
 	g_signal_connect(
@@ -2170,8 +2169,8 @@ static gboolean gui_init_settings_hsliderMaxSteps(
  *****************************************************
  */
 static gboolean gui_init_settings_chkbtnUse2dRollEffect(
-	Gui		*gui,
-	GtkBuilder	*builder
+	Gui         *gui,
+	GtkBuilder  *builder
 	)
 {
 	/* sanity checks */
@@ -2226,8 +2225,8 @@ static gboolean gui_init_settings_chkbtnUse2dRollEffect(
  *****************************************************
  */
 static gboolean gui_init_settings_chkbtnDebugInfo(
-	Gui		*gui,
-	GtkBuilder	*builder
+	Gui         *gui,
+	GtkBuilder  *builder
 	)
 {
 	/* sanity checks */
@@ -2902,7 +2901,7 @@ static gboolean gui_load_gtkGladeFile(
 	)
 {
 	GtkBuilder *builder = NULL;
-	GError	   *error   = NULL;
+	GError     *error   = NULL;
 
 	/* sanity checks */
 	if ( !gui ) {
@@ -3131,8 +3130,8 @@ static gboolean core_init( Core *core )
 	}
 
 	memset( core, 0, sizeof(Core) );
-	core->randGen		= g_rand_new();	/* GLib random-generator */
-	core->resultRolled	= 0;
+	core->randGen      = g_rand_new();        /* GLib random-generator */
+	core->resultRolled = 0;
 
 	return TRUE;
 }
