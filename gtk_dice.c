@@ -36,9 +36,9 @@
 /* prepare GLib's i18n localization via GNU-gettext (see Useful-Links in README.txt)
  * NOTE: to be safe, always set GETTEXT_PACKAGE before including <glib/gi18n.h>
  */
-#define GETTEXT_PACKAGE	"gtk_dice"	/* our app's translation text-domain */
-#define LOCALEDIR	"lang"		/* locale directory (to host translations) */
-#define OUTCODESET	"UTF-8"		/* desired output-codeset for translations */
+#define GETTEXT_PACKAGE  "gtk_dice"     /* our app's translation text-domain */
+#define LOCALEDIR        "lang"	        /* locale directory (to host translations) */
+#define OUTCODESET       "UTF-8"        /* desired output-codeset for translations */
 #include <glib/gi18n.h>
 
 /* we need this for opening http:// and mailto: links when OS is Windows */
@@ -54,60 +54,60 @@
 
 /* locale related constants & string literals */
 
-#define MAXSIZ_LOCALE		(511+1)
+#define MAXSIZ_LOCALE             (511+1)
 
-#define STR_EN_LOCALE		"en_US.utf8"
-#define STR_EN_LOCALE_LANG	"en_US.UTF-8"
-#define STR_EN_LOCALE_LANGUAGE	"en"
+#define STR_EN_LOCALE             "en_US.utf8"
+#define STR_EN_LOCALE_LANG        "en_US.UTF-8"
+#define STR_EN_LOCALE_LANGUAGE    "en"
 
-#define STR_EL_LOCALE		"el_GR.utf8"
-#define STR_EL_LOCALE_LANG	"el_GR.UTF-8"
-#define STR_EL_LOCALE_LANGUAGE	"el"
+#define STR_EL_LOCALE             "el_GR.utf8"
+#define STR_EL_LOCALE_LANG        "el_GR.UTF-8"
+#define STR_EL_LOCALE_LANGUAGE    "el"
 
 /* definitions of some handy symbols */
 
-#define MAXSIZ_DBGMSG		(1023+1)
-#define MAXSIZ_FNAME		(255+1)
+#define MAXSIZ_DBGMSG             (1023+1)
+#define MAXSIZ_FNAME              (255+1)
 
-#define DIR_GUI			"gui/"			/* gui resources */
-#define FNAME_APPICON		DIR_GUI"3d_01.png"
-#define FNAME_APPLOGO		FNAME_APPICON
-#define FNAME_GLADE		DIR_GUI"dice.glade"
+#define DIR_GUI                   "gui/"                   /* gui resources */
+#define FNAME_APPICON             DIR_GUI"3d_01.png"
+#define FNAME_APPLOGO             FNAME_APPICON
+#define FNAME_GLADE               DIR_GUI"dice.glade"
 
 /* total number of image-files used for the 3d & 2d roll-animations */
-#define NFRAMES_3D			32
-#define NFRAMES_2D			6
+#define NFRAMES_3D                32
+#define NFRAMES_2D                6
 
 /* default settings for 3d rolling-effect */
-#define SETTINGS_DEF3D_MAXSPINS		60
-#define SETTINGS_DEF3D_BASEDELAY	7000L
-#define SETTINGS_DEF3D_STEPDELAY	400L
+#define SETTINGS_DEF3D_MAXSPINS	  60
+#define SETTINGS_DEF3D_BASEDELAY  7000L
+#define SETTINGS_DEF3D_STEPDELAY  400L
 
 /* default settings for 2d rolling-effect */
-#define SETTINGS_DEF2D_MAXSPINS		12
-#define SETTINGS_DEF2D_BASEDELAY	5000L
-#define SETTINGS_DEF2D_STEPDELAY	30000L
+#define SETTINGS_DEF2D_MAXSPINS   12
+#define SETTINGS_DEF2D_BASEDELAY  5000L
+#define SETTINGS_DEF2D_STEPDELAY  30000L
 
 /* GUI strings that are dynamically added/updated,
  * regardless their initial values specified in
  * the Glade file: FNAME_GLADE.
  * Only those enclosed in _() are translatable.
  */
-#define TXT_APP_NAME		_("GTK+2 Demo - Die")
-#define TXT_APP_VERSION		"0.2a"
-#define TXT_APP_DESCRIPTION	_("Small GTK+2 Demo\nfaking 3D/2D die-animation")
-#define TXT_APP_COPYRIGHT	"copyright (c) 2013"
-#define TXT_APP_LICENSE		_("Free for all")
-#define TXT_APP_WEBSITE_LABEL	"x-karagiannis.gr/prg/"
-#define TXT_APP_WEBSITE		"http://x-karagiannis.gr/prg/"
-#define TXT_APP_AUTHOR		"migf1 <mig_f1@hotmail.com>"
-#define TXT_APP_ARTIST		"Napoleon\nhttp://opengameart.org/content/dice-1/"
+#define TXT_APP_NAME              _("GTK+2 Demo - Die")
+#define TXT_APP_VERSION           "0.2a"
+#define TXT_APP_DESCRIPTION       _("Small GTK+2 Demo\nfaking 3D/2D die-animation")
+#define TXT_APP_COPYRIGHT         "copyright (c) 2013"
+#define TXT_APP_LICENSE           _("Free for all")
+#define TXT_APP_WEBSITE_LABEL     "x-karagiannis.gr/prg/"
+#define TXT_APP_WEBSITE           "http://x-karagiannis.gr/prg/"
+#define TXT_APP_AUTHOR            "migf1 <mig_f1@hotmail.com>"
+#define TXT_APP_ARTIST            "Napoleon\nhttp://opengameart.org/content/dice-1/"
 
-#define TXT_WTITLE_ALERT_BOX	_("Alert Box")
-#define TXT_BUTTON_ROLL2D	_("_Roll")
-#define TXT_BUTTON_ROLLING	_("...rolling...")
-#define TXTF_STATUSBAR_ONROLL	_(" Spin: %03d | Frame: %03d | Delay: %06ld")
-#define TXTF_STATUSBAR_RESULT	_(" Result: %d")
+#define TXT_WTITLE_ALERT_BOX      _("Alert Box")
+#define TXT_BUTTON_ROLL2D         _("_Roll")
+#define TXT_BUTTON_ROLLING        _("...rolling...")
+#define TXTF_STATUSBAR_ONROLL     _(" Spin: %03d | Frame: %03d | Delay: %06ld")
+#define TXTF_STATUSBAR_RESULT     _(" Result: %d")
 
 /**
  * Macro displaying an error-message with debugging info within a GUI alert-box
@@ -116,35 +116,35 @@
  * @param appWindow The owner-window of the alert-box (may be NULL).
  * @param errmsg The message to be displayed.
  */
-#define DBG_GUI_ERRMSG( appWindow, errmsg )					\
-	do {									\
-		gchar dbgMsgOut[MAXSIZ_DBGMSG] = {'\0'};			\
-		if ( !global_debugOn )						\
-			break;							\
-		g_snprintf(							\
-			dbgMsgOut,						\
-			MAXSIZ_DBGMSG,						\
-			_("File\t: %s\nFunc\t: %s\nLine\t: %d\n\n%s"),		\
-			__FILE__, __func__,  __LINE__,				\
-			(const gchar *)(errmsg) ? errmsg : "\0"			\
-			);							\
-		myGtk_alert_box( GTK_WIDGET(appWindow), dbgMsgOut );		\
-	} while(0)
+#define DBG_GUI_ERRMSG( appWindow, errmsg )                   \
+do {                                                          \
+	gchar dbgMsgOut[MAXSIZ_DBGMSG] = {'\0'};              \
+	if ( !global_debugOn )                                \
+		break;                                        \
+	g_snprintf(                                           \
+		dbgMsgOut,                                    \
+		MAXSIZ_DBGMSG,                                \
+		_("File\t: %s\nFunc\t: %s\nLine\t: %d\n\n%s"),\
+		__FILE__, __func__,  __LINE__,                \
+		(const gchar *)(errmsg) ? errmsg : "\0"       \
+		);                                            \
+	myGtk_alert_box( GTK_WIDGET(appWindow), dbgMsgOut );  \
+} while(0)
 
 /**
  * Macro displaying an error-message with debugging info in the stderr stream.
  */
-#define DBG_STDERR_MSG( errmsg )						\
-	do {									\
-		if ( !global_debugOn )						\
-			break;							\
-		fputs( "*** ERROR:\n", stderr );				\
-		fprintf(stderr,							\
-			"*** File: %s | Func: %s | Line: %d\n*** %s\n",		\
-			__FILE__, __func__,  __LINE__,				\
-			(const char *)(errmsg) ? errmsg : "\0"			\
-			);							\
-	} while(0)
+#define DBG_STDERR_MSG( errmsg )                                \
+do {                                                            \
+	if ( !global_debugOn )                                  \
+		break;                                          \
+	fputs( "*** ERROR:\n", stderr );                        \
+	fprintf(stderr,                                         \
+		"*** File: %s | Func: %s | Line: %d\n*** %s\n", \
+		__FILE__, __func__,  __LINE__,                  \
+		(const char *)(errmsg) ? errmsg : "\0"          \
+		);                                              \
+} while(0)
 
 /* -------------------------------
  * Custom DataTypes
@@ -153,8 +153,8 @@
 
 /* core data of the application (e.g. separated from the GUI ) */
 typedef struct Core {
-	GRand	*randGen;
-	gint32	resultRolled;
+	GRand   *randGen;
+	gint32  resultRolled;
 }Core;
 
 /* aliases of some GTK+2 widget types (just for consistency reasons) */
@@ -162,15 +162,15 @@ typedef GtkWidget GuiWindow, GuiDialog;
 
 /* a bit more convenient GUI abstraction of the menus */
 typedef struct GuiMenus {
-	GtkWidget	*titleFile;
-	GtkWidget	*itemQuit;
-	GtkWidget	*titleLang;
-	GtkWidget	*lang;
-	GtkWidget	*itemEnglish;
-	GtkWidget	*itemGreek;
-	GtkWidget	*itemEnvLang;
-	GtkWidget	*titleHelp;
-	GtkWidget 	*itemAbout;
+	GtkWidget  *titleFile;
+	GtkWidget  *itemQuit;
+	GtkWidget  *titleLang;
+	GtkWidget  *lang;
+	GtkWidget  *itemEnglish;
+	GtkWidget  *itemGreek;
+	GtkWidget  *itemEnvLang;
+	GtkWidget  *titleHelp;
+	GtkWidget  *itemAbout;
 }GuiMenus;
 
 /* more convenient GUI abstraction of the "Die area".
@@ -180,57 +180,57 @@ typedef struct GuiMenus {
  *	(see the file: dice.glade, preferably with Glade).
  */
 typedef struct GuiDieArea {
-	GtkWidget	*evboxWidget;
-	GtkWidget	*imgWidget;
-	GtkWidget	*btnWidget;
+	GtkWidget  *evboxWidget;
+	GtkWidget  *imgWidget;
+	GtkWidget  *btnWidget;
 }GuiDieArea;
 
 /* UNUSED: there used to be 2 animation areas, one for 2d and one for 3d */
 typedef struct GuiDieArea3d {
-	GtkWidget	*vbox3d;
-	GtkWidget	*evboxWidget;
-	GtkWidget	*imgWidget;
+	GtkWidget  *vbox3d;
+	GtkWidget  *evboxWidget;
+	GtkWidget  *imgWidget;
 }GuiDieArea3d;
 
 /* a bit more convenient GUI abstraction of an horizontal slider */
 typedef struct GuiHorzSlider {
-	GtkWidget	*widget;
-	GtkAdjustment	*adjustment;
-	gdouble		minVal, maxVal, value;
-	gdouble		stepInc, pageInc;
-	gint		digits;
+	GtkWidget       *widget;
+	GtkAdjustment   *adjustment;
+	gdouble         minVal, maxVal, value;
+	gdouble         stepInc, pageInc;
+	gint            digits;
 	/* non-critical fields, let them be as defined in Glade
-	gdouble		pageSize;
-	gboolean	drawValue;
-	GtkPositionType	valuePos;
+	gdouble         pageSize;
+	gboolean        drawValue;
+	GtkPositionType valuePos;
 	*/
 }GuiHorzSlider;
 
 /* more convenient GUI abstraction of the "Settings area" */
 typedef struct GuiSettings {
-	GtkWidget	*chkbtnDebugInfoWidget;
-	GtkWidget	*chkbtnRollEffectWidget;
-	GtkWidget	*labelMaxStepsWidget;
-	GuiHorzSlider	hsliderMaxSteps;
-	GtkWidget	*labelBaseDelayWidget;
-	GuiHorzSlider	hsliderBaseDelay;
-	GtkWidget	*labelStepDelayWidget;
-	GuiHorzSlider	hsliderStepDelay;
-	GtkWidget	*btnDefault3dWidget;
-	GtkWidget	*btnDefault2dWidget;
+	GtkWidget      *chkbtnDebugInfoWidget;
+	GtkWidget      *chkbtnRollEffectWidget;
+	GtkWidget      *labelMaxStepsWidget;
+	GuiHorzSlider  hsliderMaxSteps;
+	GtkWidget      *labelBaseDelayWidget;
+	GuiHorzSlider  hsliderBaseDelay;
+	GtkWidget      *labelStepDelayWidget;
+	GuiHorzSlider  hsliderStepDelay;
+	GtkWidget      *btnDefault3dWidget;
+	GtkWidget      *btnDefault2dWidget;
 }GuiSettings;
 
 /* a bit more convenient GUI abstraction of the status-bar */
 typedef struct GuiStatusBar {
-	GtkWidget 	*widget;
-	guint		contextId;
-	guint		currMessageId;
+	GtkWidget  *widget;
+	guint      contextId;
+	guint      currMessageId;
 }GuiStatusBar;
 
 typedef struct GuiLocaleEnv {
-	gchar locale[MAXSIZ_LOCALE];
-	gchar *varLang;
-	gchar *varLanguage;	/* GTK+ does not check this on Win32 */
+	gchar  locale[MAXSIZ_LOCALE];
+	gchar  *varLang;
+	gchar  *varLanguage;	/* GTK+ does not check this on Win32 */
 }GuiLocaleEnv;
 
 /* a bit more convenient abstraction of the application's GUI
@@ -238,16 +238,16 @@ typedef struct GuiLocaleEnv {
  *	with a pointer that links the GUI with the core-data.
  */
 typedef struct Gui {
-	gboolean	quitOnDestroyAppWindow;
-	GuiLocaleEnv	callerLocaleEnv;
-	GuiWindow	*appWindow;
-	GuiDialog	*dlgAbout;
-	GuiMenus	menu;
-	GuiDieArea 	dieArea;
-	GuiDieArea3d 	dieArea3d;	/* unused */
-	GuiSettings	settings;
-	GuiStatusBar	statusBar;
-	Core		*linkToCoreData;
+	gboolean      quitOnDestroyAppWindow;
+	GuiLocaleEnv  callerLocaleEnv;
+	GuiWindow     *appWindow;
+	GuiDialog     *dlgAbout;
+	GuiMenus      menu;
+	GuiDieArea    dieArea;
+	GuiDieArea3d  dieArea3d;	/* unused */
+	GuiSettings   settings;
+	GuiStatusBar  statusBar;
+	Core	      *linkToCoreData;
 }Gui;
 
 /* -------------------------------
@@ -263,8 +263,8 @@ static gboolean global_debugOn;	/* too lazy to wrap it */
  * -------------------------------
  */
 
-static void	gui_refresh_default3d2d_buttons( Gui *gui );
-static gboolean gui_reload_gtkGladeFile( Gui *gui, const gchar *fnameGlade );
+static void      gui_refresh_default3d2d_buttons( Gui *gui );
+static gboolean  gui_reload_gtkGladeFile( Gui *gui, const gchar *fnameGlade );
 
 /* -------------------------------
  * Function Definitions
@@ -276,12 +276,16 @@ static gboolean gui_reload_gtkGladeFile( Gui *gui, const gchar *fnameGlade );
  * only if 'global_debugOn' is TRUE.
  *****************************************************
  */
-static void dbg_print_info( char *fmtxt, ... )
+static void dbg_print_info(
+	char *fmtxt,
+	...
+	)
 {
 	va_list args;
 
-	if ( !global_debugOn || !fmtxt )
+	if ( !global_debugOn || !fmtxt ) {
 		return;
+	}
 
 	va_start(args, fmtxt);
 	vprintf( fmtxt, args );
@@ -293,7 +297,10 @@ static void dbg_print_info( char *fmtxt, ... )
  * only if 'global_debugOn' is TRUE.
  *****************************************************
  */
-static void dbg_print_gui_callerLocaleEnv( const Gui *gui, const gchar *title )
+static void dbg_print_gui_callerLocaleEnv(
+	const Gui    *gui,
+	const gchar  *title
+	)
 {
 	/* sanity check */
 	if ( !gui ) {
@@ -333,9 +340,9 @@ static void dbg_print_locale_environment( const gchar *title )
  *****************************************************
  */
 static gboolean init_localization_gettext(
-	const char *transTextDomain,
-	const char *localeDir,
-	const char *outCodeset
+	const char  *transTextDomain,
+	const char  *localeDir,
+	const char  *outCodeset
 	)
 {
 	/* sanity checks */
@@ -372,9 +379,9 @@ static gboolean init_localization_gettext(
  *****************************************************
  */
 static void set_locale_environment(
-	const gchar *locale,
-	const gchar *lang,
-	const gchar *language
+	const gchar  *locale,
+	const gchar  *lang,
+	const gchar  *language
 	)
 {
 	/* sanity checks */
@@ -398,20 +405,22 @@ static void set_locale_environment(
 /*************************************************//**
  * Force a redraw of the specified widget.
  *
- * 	First the widget is flagged for display, and then
- *	GTK+ is forced to iterate through its main-loop
- *	until no more events are left for processing.
+ * First the widget is flagged for display, and then
+ * GTK+ is forced to iterate through its main-loop
+ * until no more events are left for processing.
  *****************************************************
  */
 static void myGtk_widget_refresh( GtkWidget *widget )
 {
 	/* sanity check */
-	if ( !widget )
+	if ( !widget ) {
 		return;
+	}
 
 	gtk_widget_show( widget );
-	while( gtk_events_pending() )
+	while( gtk_events_pending() ) {
 		gtk_main_iteration();
+	}
 
 	return;
 }
@@ -419,18 +428,22 @@ static void myGtk_widget_refresh( GtkWidget *widget )
 /*************************************************//**
  * Display the specified message inside a simple modal dialog.
  *
- * 	The owner of the dialog is the window specified in
- *	the first argument, which usually is the main window
- *	of the application (if passed as NULL, the alert-box
- *	will not have an owner, which is fine but a bit odd).
+ * The owner of the dialog is the window specified in
+ * the first argument, which usually is the main window
+ * of the application (if passed as NULL, the alert-box
+ * will not have an owner, which is fine but a bit odd).
  *****************************************************
  */
-static void myGtk_alert_box( GtkWidget *appMainWindow, gchar *message )
+static void myGtk_alert_box(
+	GtkWidget  *appMainWindow,
+	gchar      *message
+	)
 {
 	GtkWidget *alertBox = NULL;
 
-	if ( appMainWindow )
+	if ( appMainWindow ) {
 		gtk_widget_set_sensitive( appMainWindow, FALSE );
+	}
 
 	alertBox = gtk_message_dialog_new(
 			GTK_WINDOW(appMainWindow),
@@ -444,8 +457,9 @@ static void myGtk_alert_box( GtkWidget *appMainWindow, gchar *message )
 	gtk_dialog_run( GTK_DIALOG(alertBox) );
 	gtk_widget_destroy( alertBox );
 
-	if ( appMainWindow )
+	if ( appMainWindow ) {
 		gtk_widget_set_sensitive( appMainWindow, TRUE );
+	}
 }
 
 /*************************************************//**
@@ -454,13 +468,13 @@ static void myGtk_alert_box( GtkWidget *appMainWindow, gchar *message )
  *****************************************************
  */
 static gboolean myGtk_horzSlider_set(
-	GuiHorzSlider	*hslider,
-	gdouble		value,		/* current value */
-	gdouble		minVal,		/* lower bound */
-	gdouble		maxVal,		/* upper bound */
-	gdouble		stepInc,	/* step increment */
-	gdouble		pageInc,	/* page increment */
-	gint		digits		/* # of decimal digits (for increments) */
+	GuiHorzSlider  *hslider,
+	gdouble	        value,     /* current value */
+	gdouble         minVal,    /* lower bound */
+	gdouble         maxVal,    /* upper bound */
+	gdouble         stepInc,   /* step increment */
+	gdouble         pageInc,   /* page increment */
+	gint            digits     /* # of decimal digits (for increments) */
 	)
 {
 	/* sanity checks */
@@ -505,7 +519,10 @@ static gboolean myGtk_horzSlider_set(
  * Change the value field of the specified horizontal slider
  *****************************************************
  */
-static gboolean myGtk_horzSlider_set_value( GuiHorzSlider *hslider, gdouble value )
+static gboolean myGtk_horzSlider_set_value(
+	GuiHorzSlider  *hslider,
+	gdouble        value
+	)
 {
 	/* sanity checks */
 	if ( !hslider ) {
@@ -547,9 +564,9 @@ static gboolean gui_has_default3d_settings( const Gui *gui )
 		return FALSE;
 	}
 
-	return 	!gtk_toggle_button_get_active(
+	return  !gtk_toggle_button_get_active(
 			GTK_TOGGLE_BUTTON(settings->chkbtnRollEffectWidget)
-		)
+			)
 		&& settings->hsliderMaxSteps.value == SETTINGS_DEF3D_MAXSPINS
 		&& settings->hsliderBaseDelay.value == SETTINGS_DEF3D_BASEDELAY
 		&& settings->hsliderStepDelay.value == SETTINGS_DEF3D_STEPDELAY
@@ -582,7 +599,7 @@ static gboolean gui_has_default2d_settings( const Gui *gui )
 
 	return 	gtk_toggle_button_get_active(
 			GTK_TOGGLE_BUTTON(settings->chkbtnRollEffectWidget)
-		)
+			)
 		&& settings->hsliderMaxSteps.value == SETTINGS_DEF2D_MAXSPINS
 		&& settings->hsliderBaseDelay.value == SETTINGS_DEF2D_BASEDELAY
 		&& settings->hsliderStepDelay.value == SETTINGS_DEF2D_STEPDELAY
@@ -604,7 +621,7 @@ static void gui_set_default3d_settings( Gui *gui )
 	}
 	settings = &gui->settings;
 	if ( !settings->chkbtnRollEffectWidget
-	|| !settings->hsliderMaxSteps.widget || !settings->hsliderMaxSteps.adjustment
+	|| !settings->hsliderMaxSteps.widget  || !settings->hsliderMaxSteps.adjustment
 	|| !settings->hsliderBaseDelay.widget || !settings->hsliderBaseDelay.adjustment
 	|| !settings->hsliderStepDelay.widget || !settings->hsliderStepDelay.adjustment
 	){
@@ -643,7 +660,7 @@ static void gui_set_default2d_settings( Gui *gui )
 	}
 	settings = &gui->settings;
 	if ( !settings->chkbtnRollEffectWidget
-	|| !settings->hsliderMaxSteps.widget || !settings->hsliderMaxSteps.adjustment
+	|| !settings->hsliderMaxSteps.widget  || !settings->hsliderMaxSteps.adjustment
 	|| !settings->hsliderBaseDelay.widget || !settings->hsliderBaseDelay.adjustment
 	|| !settings->hsliderStepDelay.widget || !settings->hsliderStepDelay.adjustment
 	){
@@ -671,14 +688,14 @@ static void gui_set_default2d_settings( Gui *gui )
  * Update the buttons "Default 3D" and "Default 2D"
  * according to the current state of the program.
  *
- *	For example, when the user enables the 3d-effect
- *	the button "Default 2D" gets disabled.
+ * For example, when the user enables the 3d-effect
+ * the button "Default 2D" gets disabled.
  *****************************************************
  */
 static void gui_refresh_default3d2d_buttons( Gui *gui )
 {
 	GuiSettings *settings = NULL;
-	gboolean isAnim2d = FALSE;
+	gboolean    isAnim2d  = FALSE;
 
 	/* sanity checks */
 	if ( !gui ) {
@@ -687,7 +704,7 @@ static void gui_refresh_default3d2d_buttons( Gui *gui )
 	}
 	settings = &gui->settings;
 	if ( !settings->chkbtnRollEffectWidget
-	|| !settings->hsliderMaxSteps.widget || !settings->hsliderMaxSteps.adjustment
+	|| !settings->hsliderMaxSteps.widget  || !settings->hsliderMaxSteps.adjustment
 	|| !settings->hsliderBaseDelay.widget || !settings->hsliderBaseDelay.adjustment
 	|| !settings->hsliderStepDelay.widget || !settings->hsliderStepDelay.adjustment
 	|| !settings->btnDefault3dWidget || !settings->btnDefault2dWidget
@@ -701,6 +718,7 @@ static void gui_refresh_default3d2d_buttons( Gui *gui )
 			);
 	gtk_widget_set_sensitive( gui->settings.btnDefault2dWidget, FALSE );
 	gtk_widget_set_sensitive( gui->settings.btnDefault3dWidget, FALSE );
+
 	if ( isAnim2d && !gui_has_default2d_settings(gui) ) {
 		gtk_widget_set_sensitive( gui->settings.btnDefault2dWidget, TRUE );
 	}
@@ -714,11 +732,14 @@ static void gui_refresh_default3d2d_buttons( Gui *gui )
  * enable all the others, in the Language menu.
  *****************************************************
  */
-static gboolean gui_disable_langmenu_item_as_radio( Gui *gui, GtkWidget *menuItem )
+static gboolean gui_disable_langmenu_item_as_radio(
+	Gui        *gui,
+	GtkWidget  *menuItem
+	)
 {
 	/* temp ptrs for better clarity & for saving us some typing later on */
-	GtkWidget *en = NULL;
-	GtkWidget *el = NULL;
+	GtkWidget *en      = NULL;
+	GtkWidget *el      = NULL;
 	GtkWidget *envLang = NULL;
 
 	/* sanity checks */
@@ -749,9 +770,9 @@ static gboolean gui_disable_langmenu_item_as_radio( Gui *gui, GtkWidget *menuIte
 	}
 
 	/* just for brevity & better clarity */
-	en	= gui->menu.itemEnglish;
-	el	= gui->menu.itemGreek;
-	envLang	= gui->menu.itemEnvLang;
+	en      = gui->menu.itemEnglish;
+	el      = gui->menu.itemGreek;
+	envLang = gui->menu.itemEnvLang;
 
 	/* first enable all langmenu items */
 	gtk_widget_set_sensitive(en, TRUE);
@@ -776,24 +797,26 @@ static gboolean gui_disable_langmenu_item_as_radio( Gui *gui, GtkWidget *menuIte
  * Callback function connected to the GTK+ "delete-event"
  * signal, for the main window of the application.
  *
- *	When returing FALSE on a "delete-event" signal, GTK+
- *	converts it to a "destroy" signal and re-emits it.
- *	Returning TRUE means we don't want the window to be
- *	destroyed, which may be useful if for example we want
- *	to ask for confirmation before destroying the window.
- *	Here we just return FALSE, thus telling GTK+ to
- *	immediately emit a "destroy" signal.
+ * When returing FALSE on a "delete-event" signal, GTK+
+ * converts it to a "destroy" signal and re-emits it.
+ * Returning TRUE means we don't want the window to be
+ * destroyed, which may be useful if for example we want
+ * to ask for confirmation before destroying the window.
+ *
+ * Here we just return FALSE, thus telling GTK+ to
+ * immediately emit a "destroy" signal.
  *****************************************************
  */
 static gboolean on_delete_event_appWindow(
-	GtkWidget	*appWindow,
-	GdkEvent	*event,
-	Gui		*gui
+	GtkWidget  *appWindow,
+	GdkEvent   *event,
+	Gui        *gui
 	)
 {
 	/* avoid compiler warnings for unused parameters */
-	if ( !appWindow || !event || !gui )
+	if ( !appWindow || !event || !gui ) {
 		return FALSE;
+	}
 
 	return FALSE;
 }
@@ -802,47 +825,52 @@ static gboolean on_delete_event_appWindow(
  * Callback function connected to the "destroy" GTK+ signal,
  * for the main window of the application.
  *
- *	The "destroy" signal is emitted by a GTK+ window when
- *	the user closes the window, usually by clicking on its
- *	close icon (on Windows that's the 'x' icon, located at
- *	the top right corner of the window).
+ * The "destroy" signal is emitted by a GTK+ window when
+ * the user closes the window, usually by clicking on its
+ * close icon (on Windows that's the 'x' icon, located at
+ * the top right corner of the window).
  *
- *	Normally we just want to terminate the GTK+ main-loop
- *	so the flow continues to our cleanup code (if any),
- *	in the main() function and then terminate the program.
+ * Normally we just want to terminate the GTK+ main-loop
+ * so the flow continues to our cleanup code (if any),
+ * in the main() function and then terminate the program.
  *
- *	However, in this program a signal for destroying the
- *	main application window does not necessarily mean that
- *	the user has requested program temination.
+ * However, in this program a signal for destroying the
+ * main application window does not necessarily mean that
+ * the user has requested program termination.
  *
- *	It could be that the signal has been "artificially"
- *	produced by the program itself, when the user requested
- *	a dynamic change of the GUI language, right after
- *	changing the value of the environment-variable LANG.
+ * It could be that the signal has been "artificially"
+ * produced by the program itself, when the user requested
+ * a dynamic change of the GUI language, right after
+ * changing the value of the environment-variable LANG.
  *
- *	In those cases, the program schedules the destruction
- *	of all its top-level windows (thus its main window too)
- *	inside the function: gui_reload_gtkGladeFile(), by
- *	calling gtk_widget_destroy() on all of them.
+ * In those cases, the program schedules the destruction
+ * of all its top-level windows (thus its main window too)
+ * inside the function: gui_reload_gtkGladeFile(), by
+ * calling gtk_widget_destroy() on all of them.
  *
- *	Once this is done, the GUI resources are re-loaded from
- *	the Glade file, which means that they get re-initialized
- *	according to the new value of LANG, due to GNU-gettext.
+ * Once this is done, the GUI resources are re-loaded from
+ * the Glade file, which means that they get re-initialized
+ * according to the new value of LANG, due to GNU-gettext.
  *
- *	So obviously, a "destroy" signal sent by the main window
- *	of the application does not always dictate program termination.
+ * So obviously, a "destroy" signal sent by the main window
+ * of the application does not always dictate program termination.
  *
- *	To distingusigh whether a "destroy" signal should terminate
- *	the main loop of GTK+ or not, I use the boolean variable:
- *	gui->quitOnDestroyAppWindow. If it is TRUE gtk_main_quit()
- *	is called, otherwise the GTK+ main-loop keeps going on.
+ * To distinguish whether a "destroy" signal should terminate
+ * the main loop of GTK+ or not, I use the boolean variable:
+ * gui->quitOnDestroyAppWindow. If it is TRUE gtk_main_quit()
+ * is called, otherwise the GTK+ main-loop keeps going on.
  *
- *	See also:
- *		gui_reload_gtkGladeFile(), on_activate_miEnglish(),
- *		on_activate_miGreek() and on_activate_miEnvLang().
+ * See also:
+ * 	gui_reload_gtkGladeFile()
+ *	on_activate_miEnglish()
+ *	on_activate_miGreek()
+ *	on_activate_miEnvLang()
  *****************************************************
  */
-static void on_destroy_appWindow( GtkWidget *appWindow, Gui *gui )
+static void on_destroy_appWindow(
+	GtkWidget  *appWindow,
+	Gui        *gui
+	)
 {
 	/* avoid compiler warning for unused parameter */
 	if ( !appWindow ) {
@@ -858,19 +886,21 @@ static void on_destroy_appWindow( GtkWidget *appWindow, Gui *gui )
  * Callback function connected to the GTK+ "activate"
  * signal, for the menu-item "Language->English".
  *
- *	The menu-item is visualy disabled, LANG is set
- *	to "en" and the whole GUI is reloaded in order
- *	to reflect the change of the language.
+ * The menu-item is visually disabled, LANG is set
+ * to "en" and the whole GUI is reloaded in order
+ * to reflect the change of the language.
  *
- *	NOTE:	To better understand how this works,
- *		see also: gui_reload_gtkGladeFile().
+ * NOTE:
+ * 	To better understand how this works,
+ *	see also: gui_reload_gtkGladeFile().
  *****************************************************
  */
 static void on_activate_miEnglish( GtkWidget *menuItem, Gui *gui )
 {
 	/* avoid compiler warning for unused parameter */
-	if ( !menuItem )
+	if ( !menuItem ) {
 		return;
+	}
 
 	/* sanity checks */
 	if ( !gui ) {
@@ -905,19 +935,24 @@ static void on_activate_miEnglish( GtkWidget *menuItem, Gui *gui )
  * Callback function connected to the GTK+ "activate"
  * signal, for the menu-item "Language->Greek".
  *
- *	The menu-item is visualy disabled, LANG is set
- *	to "el" and the whole GUI is reloaded in order
- *	to reflect the change of the language.
+ * The menu-item is visualy disabled, LANG is set
+ * to "el" and the whole GUI is reloaded in order
+ * to reflect the change of the language.
  *
- *	NOTE:	To better understand how this works,
- *		see also: gui_reload_gtkGladeFile().
+ * NOTE:
+ *	To better understand how this works,
+ *	see also: gui_reload_gtkGladeFile().
  *****************************************************
  */
-static void on_activate_miGreek( GtkWidget *menuItem, Gui *gui )
+static void on_activate_miGreek(
+	GtkWidget  *menuItem,
+	Gui        *gui
+	)
 {
 	/* avoid compiler warning for unused parameter */
-	if ( !menuItem )
+	if ( !menuItem ) {
 		return;
+	}
 
 	/* sanity checks */
 	if ( !gui ) {
@@ -953,34 +988,37 @@ static void on_activate_miGreek( GtkWidget *menuItem, Gui *gui )
  * Callback function connected to the GTK+ "activate"
  * signal, for the menu-item "Language->use Environment".
  *
- *	The menu-item is visualy disabled, LANG is set to
- *	the value saved in gui->envLang (when the program
- *	started), and the whole GUI is reloaded in order
- *	to reflect the change of the language.
+ * The menu-item is visually disabled, LANG is set to
+ * the value saved in gui->envLang (when the program
+ * started), and the whole GUI is reloaded in order
+ * to reflect the change of the language.
  *
- *	NOTE:	If the saved value of LANG was NULL then
- *		we set it to "en" and we inform the user.
+ * NOTE:
+ *	If the saved value of LANG was NULL then we set
+ *	it to "en" and we inform the user.
  *
- *		If the saved value of LANG defines a
- *		language with no translation available
- *		then GNU-gettext ensures that it will
- *		fallback to the defualt language, which
- *		is English.
+ *	If the saved value of LANG defines a language
+ *	with no translation available then GNU-gettext
+ *	ensures that it will fallback to the default
+ *	language, which is English.
  *
- *		In that case the user is not directly
- *		informed, but he gets a visual hint
- *		because the menu-item stays disabled
- *		inside the menu.
+ *	In that case, the user is not directly informed,
+ *	but he gets a visual hint because the menu-item
+ *	stays disabled inside the menu.
  *
- *		To better understand how this works,
- *		see also: gui_reload_gtkGladeFile().
+ *	To better understand how this works,
+ *	see also: gui_reload_gtkGladeFile().
  *****************************************************
  */
-static void on_activate_miEnvLang( GtkWidget *menuItem, Gui *gui )
+static void on_activate_miEnvLang(
+	GtkWidget *menuItem,
+	Gui       *gui
+	)
 {
 	/* avoid compiler warning for unused parameter */
-	if ( !menuItem )
+	if ( !menuItem ) {
 		return;
+	}
 
 	/* sanity checks */
 	if ( !gui ) {
@@ -1028,43 +1066,45 @@ ENGLISH is used as fallback language.")
  * Callback function connected to the GTK+ "activate"
  * signal, for the menu-item "Menu->About".
  *
- *	Displays the "About" dialog, which is defined
- *	as a GtkAboutDialog window in the Glade file.
+ * It Displays the "About" dialog, which is defined as a
+ * GtkAboutDialog window in the Glade file.
  *
- *	This makes it easier to present the desired
- *	information in a standardized manner, but I
- *	haven't found yet an easy way to access the
- *	members of the dialog's action-area, that is
- *	the buttons "Credits", "License" and "Close".
+ * This makes it easier to present the desired information
+ * in a standardized manner, but I haven't found yet an easy
+ * way to access the members of the dialog's action-area,
+ * that is the buttons: "Credits", "License" and "Close".
  *
- *	Perhaps someday I dig deeper into the internals
- *	of the GtkAboutDialog type, but right now I see
- *	no easy way to mark the labels of those buttons
- *	as translatable by GNU-gettext.
+ * Perhaps someday I dig deeper into the internals of the
+ * GtkAboutDialog type, but right now I see no easy way to
+ * mark the labels of those buttons as translatable by GNU-gettext.
  *
- *	Furthermore, when running on Win32 OSes, GTK+
- *	has trouble registering properly some common
- *	hyperlink-protocols such as "http://" & "mailto:".
- *	The problem is that the About dialog contains
- *	quite a few of them.
+ * Furthermore, when running on Win32 OSes, GTK+ has trouble
+ * registering properly some common hyperlink-protocols,
+ * such as "http://" & "mailto:". The problem is that the
+ * About dialog contains quite a few of them.
  *
- *	To solve this problem, I overwrite GTK+'s default
- *	behaviour for links in this dialog, by connecting
- *	the callback function: on_activate_link_dlgAbout()
- *	to the "activate-link" signals emitted by the dialog.
+ * To solve this problem, I overwrite GTK+'s default behaviour
+ * for links in this dialog, by connecting the callback function:
+ * on_activate_link_dlgAbout() to the "activate-link" signals
+ * emitted by the dialog.
  *
- *	The callback function is used only when Win32 is
- *	the compilation target, regulated by a relative
- *	pre-processor directive.
- *	For more info, please see the functions:
- *	gui_init_dlgAbout() and on_activate_link_dlgAbout()
+ * The callback function is used only when Win32 is the compilation
+ * target, regulated by a relative pre-processor directive.
+ *
+ * For more info, please see the functions:
+ *	gui_init_dlgAbout()
+ *	on_activate_link_dlgAbout()
  *****************************************************
  */
-static void on_activate_miAbout( GtkWidget *menuItem, Gui *gui )
+static void on_activate_miAbout(
+	GtkWidget  *menuItem,
+	Gui        *gui
+	)
 {
 	/* avoid compiler warning for unused parameter */
-	if ( !menuItem )
+	if ( !menuItem ) {
 		return;
+	}
 
 	/* sanity checks */
 	if ( !gui ) {
@@ -1093,22 +1133,27 @@ static void on_activate_miAbout( GtkWidget *menuItem, Gui *gui )
  * Callback function connected to the GTK+ "activate"
  * signal, for the menu-item "Menu->Quit".
  *
- *	When the user selects this menu-item we want to
- *	terminate the program, so we first set to TRUE
- *	the boolean variable: gui->quitOnDestroyAppWindow,
- *	and then we call the same callback function we use
- *	when the "destroy" signal is sent by the main window
- *	of our program.
+ * When the user selects this menu-item we want to
+ * terminate the program, so we first set to TRUE
+ * the boolean variable: gui->quitOnDestroyAppWindow,
+ * and then we call the same callback function we use
+ * when the "destroy" signal is sent by the main window
+ * of our program.
  *
- *	For details about gui->quitOnDestroyAppWindow, please
- *	read the comments of the function: on_destroy_appWindow()
+ * For details about gui->quitOnDestroyAppWindow, please
+ * read the comments of the function:
+ *	on_destroy_appWindow()
  *****************************************************
  */
-static void on_activate_miQuit( GtkWidget *menuItem, Gui *gui )
+static void on_activate_miQuit(
+	GtkWidget  *menuItem,
+	Gui        *gui
+	)
 {
 	/* avoid compiler warning for unused parameter */
-	if ( !menuItem )
+	if ( !menuItem ) {
 		return;
+	}
 
 	/* sanity checks */
 	if ( !gui ) {
@@ -1126,59 +1171,63 @@ static void on_activate_miQuit( GtkWidget *menuItem, Gui *gui )
  * Callback function connected to the GTK+ "clicked" signal,
  * for the button "Roll".
  *
- *	This function implements the animation of the die. It is
- *	called when the user clicks on the button "Roll" or anywhere
- *	inside the event-box that hosts the animation's image-widget.
+ * This function implements the animation of the die. It is
+ * called when the user clicks on the button "Roll" or anywhere
+ * inside the event-box that hosts the animation's image-widget.
  *
- *	The basic idea is to have a loop of user-defined 'maxSteps'
- *	iterations. Within each iteration we produce a random integer
- *	from 1 to 6, we load the corresponding image into the image-widget
- *	and we redraw the widget. Then we add some delay (sleep) until
- *	the next iteration. The last generated random integer is the
- *	final result of the whole roll.
+ * The basic idea is to have a loop of user-defined 'maxSteps'
+ * iterations. Within each iteration we produce a random integer
+ * from 1 to 6, we load the corresponding image into the image-widget
+ * and we redraw the widget. Then we add some delay (sleep) until
+ * the next iteration. The last generated random integer is the
+ * final result of the whole roll.
  *
- *	However, the code gets much more involved, because we
- *	implement enhanced functionality compared to the basic
- *	one described above.
+ * However, the code gets much more involved, because we
+ * implement enhanced functionality compared to the basic
+ * one described above.
  *
- *	Besides 'maxSteps', we also let the user to decide the
- *	'baseDelay' to be applied between iterations (steps),
- *	along with an additional 'stepDelay' that gets added
- *	to the 'baseDelay' after every loop iteration, thus
- *	producing a progressive slow-down to the animation
- *	which can be thought as a naive friction-effect.
+ * Besides 'maxSteps', we also let the user to decide the
+ * 'baseDelay' to be applied between iterations (steps),
+ * along with an additional 'stepDelay' that gets added
+ * to the 'baseDelay' after every loop iteration, thus
+ * producing a progressive slow-down to the animation
+ * which can be thought as a naive friction-effect.
  *
- *	We also let the user decide whether we should use
- *	flat 2d or (pseudo) 3d images for the animation-effect.
- *	However, first & last frames are always flat 2d images.
+ * We also let the user decide whether we should use
+ * flat 2d or (pseudo) 3d images for the animation-effect.
+ * However, first & last frames are always flat 2d images.
  *
- *	I've put quite a few comments inside the function, hoping
- *	they will make it easier to follow the code. Let me add
- *	though that, since this is not a true animation, the term
- *	"Frames" is used in a rough context.
+ * I've put quite a few comments inside the function, hoping
+ * they will make it easier to follow the code. Let me add
+ * though that, since this is not a true animation, the term
+ * "Frames" is used in a rough context.
  *
- *	A complete 3d effect uses NFRAMES_3D images (currently 32)
- *	while a complete 2d effect uses NFRAMES_2D images (currently 6).
- *	So, depending on the current value of the "Use 2D rolling-effect"
- *	setting, if 'maxSteps' exceeds the frames limit, the animation
- *	reverses its direction as soon as it reaches the last frame.
- *	When reversed, if it reaches the first frame it changes its
- *	direction again, and so on.
+ * A complete 3d effect uses NFRAMES_3D images (currently 32)
+ * while a complete 2d effect uses NFRAMES_2D images (currently 6).
+ * So, depending on the current value of the "Use 2D rolling-effect"
+ * setting, if 'maxSteps' exceeds the frames limit, the animation
+ * reverses its direction as soon as it reaches the last frame.
+ * 
+ * When reversed, if it reaches the first frame it changes its
+ * direction again, and so on.
  *****************************************************
  */
-static void on_clicked_btnRoll( GtkWidget *button, Gui *gui )
+static void on_clicked_btnRoll(
+	GtkWidget  *button,
+	Gui        *gui
+	)
 {
-	gchar *fmtText = NULL;		/* for creating formatted text via snprintf() */
-	gchar msgStatusbar[MAXSIZ_FNAME] = {'\0'};	/* msg displayed on status-bar */
-	gchar fnameFrame[MAXSIZ_FNAME] = {'\0'};	/* next image-frame to load */
-	gboolean isAnim2d = FALSE;	/* are we currently in 2d or 3d animation mode? */
-	gboolean hasNextFrame = TRUE;	/* are images of current animation exhausted? */
-	gint maxFrames;			/* 3d uses NFRAMES_3D images, 2d uses NFRAMES_2D */
-	gint i = 0, iFrame = 0;		/* current step & image-frame during animation */
-	gint maxSteps = 32;		/* max number of moving-steps per roll */
-	gulong baseDelay = 500;		/* standard delay between steps (microsecs) */
-	gulong stepDelay = 500;		/* step for progressive friction (microsecs)*/
-	GuiSettings *settings = NULL;	/* just to save us some typing later on */
+	gchar      *fmtText = NULL;       /* for creating formatted text via snprintf() */
+	gchar       msgStatusbar[MAXSIZ_FNAME] = {'\0'};  /* msg displayed on status-bar */
+	gchar       fnameFrame[MAXSIZ_FNAME]   = {'\0'};  /* next image-frame to load */
+	gboolean    isAnim2d = FALSE;	  /* are we currently in 2d or 3d animation mode? */
+	gboolean    hasNextFrame = TRUE;  /* are images of current animation exhausted? */
+	gint        maxFrames;            /* 3d uses NFRAMES_3D images, 2d uses NFRAMES_2D */
+	gint        i = 0, iFrame = 0;    /* current step & image-frame during animation */
+	gint        maxSteps = 32;        /* max number of moving-steps per roll */
+	gulong      baseDelay = 500;      /* standard delay between steps (microsecs) */
+	gulong      stepDelay = 500;      /* step for progressive friction (microsecs)*/
+	GuiSettings *settings = NULL;     /* just to save us some typing later on */
 
 	/* sanity checks */
 	if ( !gui ) {
@@ -1191,7 +1240,7 @@ static void on_clicked_btnRoll( GtkWidget *button, Gui *gui )
 	}
 	settings = &gui->settings;
 	if ( !settings->chkbtnDebugInfoWidget || !settings->chkbtnRollEffectWidget
-	|| !settings->hsliderMaxSteps.widget || !settings->hsliderMaxSteps.adjustment
+	|| !settings->hsliderMaxSteps.widget  || !settings->hsliderMaxSteps.adjustment
 	|| !settings->hsliderBaseDelay.widget || !settings->hsliderBaseDelay.adjustment
 	|| !settings->hsliderStepDelay.widget || !settings->hsliderStepDelay.adjustment
 	){
@@ -1252,10 +1301,12 @@ static void on_clicked_btnRoll( GtkWidget *button, Gui *gui )
 		 */
 		gui->linkToCoreData->resultRolled =
 			g_rand_int_range( gui->linkToCoreData->randGen, 1, 7 );
-		if ( iFrame > maxFrames-1 )
+		if ( iFrame > maxFrames-1 ) {
 			hasNextFrame = FALSE;
-		if ( iFrame < 2 )
+		}
+		if ( iFrame < 2 ) {
 			hasNextFrame = TRUE;
+		}
 		iFrame = hasNextFrame ? iFrame+1 : iFrame-1;
 
 		/* construct the filename of the next image-frame to be displayed,
@@ -1317,20 +1368,21 @@ static void on_clicked_btnRoll( GtkWidget *button, Gui *gui )
  * Callback function connected to the GTK+ "activate-link"
  * signal, for the dialog About.
  *
- *	When run on Win32, GTK+ (Gio) cannot open links,
- *	thus we overwrite the default behaviour by using
- *	our own Win32 specific callback function.
+ * When run on Win32, GTK+ (Gio) cannot open links,
+ * thus we overwrite the default behaviour by using
+ * our own Win32 specific callback function.
  *****************************************************
  */
 static gboolean on_activate_link_dlgAbout(
-	GtkWidget	*dlgAbout,
-	gchar		*uri,
-	Gui		*gui
+	GtkWidget  *dlgAbout,
+	gchar      *uri,
+	Gui        *gui
 	)
 {
 	/* avoid compiler warnings for unused parameters */
-	if ( !dlgAbout || !uri )
+	if ( !dlgAbout || !uri ) {
 		return FALSE;
+	}
 
 	/* sanity checks */
 	if ( !gui ) {
@@ -1361,22 +1413,23 @@ static gboolean on_activate_link_dlgAbout(
  * Callback function connected to the GTK+ "button_press_event"
  * signal, for the event-box that hosts the animation's image-widget.
  *
- *	The image-widget is updated by sequentially loading different
- *	images into it during the animation. However, GTK+ image-widgets
- *	are not clickable. In order to catch user-clicks on the image-widget,
- *	we make it a child of an event-box, because event-boxes emit
- *	the "button_press_event" signal.
+ * The image-widget is updated by sequentially loading different
+ * images into it during the animation. However, GTK+ image-widgets
+ * are not clickable. In order to catch user-clicks on the image-widget,
+ * we make it a child of an event-box, because event-boxes emit
+ * the "button_press_event" signal.
  *****************************************************
  */
 static gboolean on_button_press_event_evboxImg(
-	GtkWidget	*eventBox,
-	GdkEventButton	*event,
-	Gui		*gui
+	GtkWidget       *eventBox,
+	GdkEventButton  *event,
+	Gui             *gui
 	)
 {
 	/* avoid compiler warnings for unused parameters */
-	if ( !eventBox || !event )
+	if ( !eventBox || !event ) {
 		return FALSE;
+	}
 
 	/* sanity checks */
 	if ( !gui ) {
@@ -1397,10 +1450,10 @@ static gboolean on_button_press_event_evboxImg(
 	 */
 
 	/* Returning TRUE means we handled the event, so the signal
-	* emission should be stopped (don't call any further
-	* callbacks that may be connected). Return FALSE
-	* to continue invoking callbacks.
-	*/
+	 * emission should be stopped (don't call any further
+	 * callbacks that may be connected). Return FALSE
+	 * to continue invoking callbacks.
+	 */
 	return TRUE;
 }
 
@@ -1410,25 +1463,26 @@ static gboolean on_button_press_event_evboxImg(
  * Callback function connected to the GTK+ "button_press_event"
  * signal, for the event-box that hosts the 3d-animation-area.
  *
- *	This function is not used in the program (it's a
- *	left-over from previous versions). I keep it here
- *	for some future experimentation.
+ * This function is not used in the program (it's a
+ * left-over from previous versions). I keep it here
+ * for some future experimentation.
  *****************************************************
  */
 static gboolean on_button_press_event_evboxImg3d(
-	GtkWidget	*eventBox,
-	GdkEventButton	*event,
-	Gui		*gui
+	GtkWidget       *eventBox,
+	GdkEventButton  *event,
+	Gui             *gui
 	)
 {
-	char tmpString[MAXSIZ_FNAME] = {'\0'};
-	gint i = 0;
-	gulong delay = 2500;		/* standard delay between shuffles (microsecs) */
+	char         tmpString[MAXSIZ_FNAME] = {'\0'};
+	gint         i = 0;
+	gulong       delay = 2500;      /* standard delay between shuffles (microsecs) */
 	const gulong delayStep = 5000;	/* step for progressive delay (microsecs) */
 
 	/* avoid compiler warnings for unused parameters */
-	if ( !eventBox || !event )
+	if ( !eventBox || !event ) {
 		return FALSE;
+	}
 
 	/* sanity checks */
 	if ( !gui ) {
@@ -1456,10 +1510,10 @@ static gboolean on_button_press_event_evboxImg3d(
 	}
 
 	/* Returning TRUE means we handled the event, so the signal
-	* emission should be stopped (don't call any further
-	* callbacks that may be connected). Return FALSE
-	* to continue invoking callbacks.
-	*/
+	 * emission should be stopped (don't call any further
+	 * callbacks that may be connected). Return FALSE
+	 * to continue invoking callbacks.
+	 */
 	return TRUE;
 }
 #endif	/* #if DISABLED */
@@ -1468,19 +1522,20 @@ static gboolean on_button_press_event_evboxImg3d(
  * Callback function connected to the GTK+ "toggled"
  * signal, for the check-button "Debuging info".
  *
- *	This button toggles between verbose and normal
- *	output of the program to the stdout & stderr
- *	streams (usually those are both the console).
+ * This button toggles between verbose and normal
+ * output of the program to the stdout & stderr
+ * streams (usually those are both the console).
  *****************************************************
  */
 static void on_toggled_chkbtnDebugInfo(
-	GtkToggleButton	*chkbutton,
-	Gui		*gui
+	GtkToggleButton  *chkbutton,
+	Gui              *gui
 	)
 {
 	/* avoid compiler warning for unused parameter */
-	if ( !chkbutton )
+	if ( !chkbutton ) {
 		return;
+	}
 
 	/* sanity checks */
 	if ( !gui ) {
@@ -1498,7 +1553,7 @@ static void on_toggled_chkbtnDebugInfo(
 	/* */
 	global_debugOn = gtk_toggle_button_get_active(
 				GTK_TOGGLE_BUTTON(gui->settings.chkbtnDebugInfoWidget)
-			);
+				);
 
 	g_print( "Debug mode: %s\n", global_debugOn ? "ON" : "OFF" );
 
@@ -1509,20 +1564,21 @@ static void on_toggled_chkbtnDebugInfo(
  * Callback function connected to the GTK+ "toggled"
  * signal, for the check-button "Use 2D rolling-effect".
  *
- *	This button toggles between the 2D and the 3D
- *	rolling-effect of the die-animation.
+ * This button toggles between the 2D and the 3D
+ * rolling-effect of the die-animation.
  *****************************************************
  */
 static void on_toggled_chkbtnUse2dRollEffect(
-	GtkToggleButton	*chkbutton,
-	Gui		*gui
+	GtkToggleButton *chkbutton,
+	Gui             *gui
 	)
 {
 	gboolean isAnim2d = FALSE;
 
 	/* avoid compiler warning for unused parameter */
-	if ( !chkbutton )
+	if ( !chkbutton ) {
 		return;
+	}
 
 	/* sanity checks */
 	if ( !gui ) {
@@ -1555,8 +1611,8 @@ static void on_toggled_chkbtnUse2dRollEffect(
  *****************************************************
  */
 static void on_value_changed_hsliderMaxSteps(
-	GtkRange	*range,
-	Gui		*gui
+	GtkRange  *range,
+	Gui       *gui
 	)
 {
 	GuiHorzSlider *hslider = NULL;
@@ -1591,8 +1647,8 @@ static void on_value_changed_hsliderMaxSteps(
  *****************************************************
  */
 static void on_value_changed_hsliderBaseDelay(
-	GtkRange	*range,
-	Gui		*gui
+	GtkRange  *range,
+	Gui       *gui
 	)
 {
 	GuiHorzSlider *hslider = NULL;
@@ -1627,15 +1683,16 @@ static void on_value_changed_hsliderBaseDelay(
  *****************************************************
  */
 static void on_value_changed_hsliderStepDelay(
-	GtkRange	*range,
-	Gui		*gui
+	GtkRange  *range,
+	Gui       *gui
 	)
 {
 	GuiHorzSlider *hslider = NULL;
 
 	/* avoid compiler warning for unused parameter */
-	if ( !range )
+	if ( !range ) {
 		return;
+	}
 
 	/* sanity check */
 	if ( !gui ) {
@@ -1697,18 +1754,19 @@ static void on_clicked_btnSettingsDefault3d(
  * Callback function connected to the GTK+ "clicked"
  * signal, for the button "Default 2D".
  *
- *	If 2d-rolling-effect is active, then animation
- *	settings are reset to their default 2d values.
+ * If 2d-rolling-effect is active, then animation
+ * settings are reset to their default 2d values.
  *****************************************************
  */
 static void on_clicked_btnSettingsDefault2d(
-	GtkWidget	*button,
-	Gui		*gui
+	GtkWidget  *button,
+	Gui        *gui
 	)
 {
 	/* avoid compiler warning for unused parameter */
-	if ( !button )
+	if ( !button ) {
 		return;
+	}
 
 	/* sanity check */
 	if ( !gui ) {
@@ -1729,16 +1787,21 @@ static void on_clicked_btnSettingsDefault2d(
 /*************************************************//**
  * Initialize the button "Default 2D".
  *
- *	Copies the GUI button from the specified GTK+ builder into
- *	my GUI settings abstraction: gui->settings, it connects
- *	callback functions to it and initializes its visual appearance.
+ * Copies the GUI button from the specified GTK+ builder
+ * into my GUI settings abstraction: gui->settings, it
+ * connects callback functions to it and initializes its
+ * visual appearance.
  *
- *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
- *		ensures that the widget pointer will be set to NULL
- *		after the widget gets destroyed.
+ * NOTE:
+ *	The GTK+ callback function: gtk_widget_destroyed()
+ *	ensures that the widget pointer will be set to NULL
+ *	after the widget gets destroyed.
  *****************************************************
  */
-static gboolean gui_init_settings_btnDefault2d( Gui *gui, GtkBuilder *builder )
+static gboolean gui_init_settings_btnDefault2d(
+	Gui         *gui,
+	GtkBuilder  *builder
+	)
 {
 	/* sanity checks */
 	if ( !gui ) {
@@ -1774,16 +1837,21 @@ static gboolean gui_init_settings_btnDefault2d( Gui *gui, GtkBuilder *builder )
 /*************************************************//**
  * Initialize the button "Default 3D".
  *
- *	Copies the GUI button from the specified GTK+ builder into
- *	my GUI settings abstraction: gui->settings, it connects
- *	callback functions to it and initializes its visual appearance.
+ * Copies the GUI button from the specified GTK+ builder
+ * into my GUI settings abstraction: gui->settings, it
+ * connects callback functions to it and initializes its
+ * visual appearance.
  *
- *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
- *		ensures that the widget pointer will be set to NULL
- *		after the widget gets destroyed.
+ * NOTE:
+ *	The GTK+ callback function: gtk_widget_destroyed()
+ *	ensures that the widget pointer will be set to NULL
+ *	after the widget gets destroyed.
  *****************************************************
  */
-static gboolean gui_init_settings_btnDefault3d( Gui *gui, GtkBuilder *builder )
+static gboolean gui_init_settings_btnDefault3d(
+	Gui         *gui,
+	GtkBuilder  *builder
+	)
 {
 	/* sanity checks */
 	if ( !gui ) {
@@ -1819,18 +1887,22 @@ static gboolean gui_init_settings_btnDefault3d( Gui *gui, GtkBuilder *builder )
 /*************************************************//**
  * Initialize the horizontal slider "StepDelay".
  *
- *	Copies the GUI slider from the specified GTK+ builder into
- *	my GUI settings abstraction: gui->settings, it connects
- *	callback functions to it and initializes its visual appearance.
+ * Copies the GUI slider from the specified GTK+ builder
+ * into my GUI settings abstraction: gui->settings, it
+ * connects callback functions to it and initializes its
+ * visual appearance.
  *
- *	My gui->settings.hsliderXxx abstraction (GuiHorzSlider) consists
- *	of 2 GTK+ graphical elements (an hscale widget and an adjustment)
- *	and some other supporting fields. We get the former from the
- *	builder and we initialize & apply the latter.
+ * My gui->settings.hsliderXxx abstraction (GuiHorzSlider)
+ * consists of 2 GTK+ graphical elements (an hscale widget
+ * and an adjustment) and some other supporting fields.
  *
- *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
- *		ensures that the widget pointer will be set to NULL
- *		after the widget gets destroyed.
+ * We get the former from the builder and we initialize
+ * and apply the latter.
+ *
+ * NOTE:
+ *	The GTK+ callback function: gtk_widget_destroyed()
+ *	ensures that the widget pointer will be set to NULL
+ *	after the widget gets destroyed.
  *****************************************************
  */
 static gboolean gui_init_settings_hsliderStepDelay(
@@ -1907,18 +1979,21 @@ static gboolean gui_init_settings_hsliderStepDelay(
 /*************************************************//**
  * Initialize the horizontal slider "Friction (StepDelay)".
  *
- *	Copies the GUI slider from the specified GTK+ builder into
- *	my GUI settings abstraction, it connects callback functions
- *	to it and initializes its visual appearance.
+ * Copies the GUI slider from the specified GTK+ builder
+ * into my GUI settings abstraction, it connects callback
+ * functions to it and initializes its visual appearance.
  *
- *	My gui->settings.hsliderXxx abstraction (GuiHorzSlider) consists
- *	of 2 GTK+ graphical elements (an hscale widget and an adjustment)
- *	and some other supporting fields. We get the former from the
- *	builder and we initialize & apply the latter.
+ * My gui->settings.hsliderXxx abstraction (GuiHorzSlider)
+ * consists of 2 GTK+ graphical elements (an hscale widget
+ * and an adjustment) and some other supporting fields.
  *
- *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
- *		ensures that the widget pointer will be set to NULL
- *		after the widget gets destroyed.
+ * We get the former from the builder and we initialize
+ * and apply the latter.
+ *
+ * NOTE:
+ *	The GTK+ callback function: gtk_widget_destroyed()
+ *	ensures that the widget pointer will be set to NULL
+ *	after the widget gets destroyed.
  *****************************************************
  */
 static gboolean gui_init_settings_hsliderBaseDelay(
@@ -1995,18 +2070,21 @@ static gboolean gui_init_settings_hsliderBaseDelay(
 /*************************************************//**
  * Initialize the horizontal slider "MaxSteps".
  *
- *	Copies the GUI slider from the specified GTK+ builder into
- *	my GUI settings abstraction, it connects callback functions
- *	to it and initializes its visual appearance.
+ * Copies the GUI slider from the specified GTK+ builder
+ * into my GUI settings abstraction, it connects callback
+ * functions to it and initializes its visual appearance.
  *
- *	My gui->settings.hsliderXxx abstraction (GuiHorzSlider) consists
- *	of 2 GTK+ graphical elements (an hscale widget and an adjustment)
- *	and some other supporting fields. We get the former from the
- *	builder and we initialize & apply the latter.
+ * My gui->settings.hsliderXxx abstraction (GuiHorzSlider)
+ * consists of 2 GTK+ graphical elements (an hscale widget
+ * and an adjustment) and some other supporting fields.
  *
- *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
- *		ensures that the widget pointer will be set to NULL
- *		after the widget gets destroyed.
+ * We get the former from the builder and we initialize
+ * and apply the latter.
+ *
+ * NOTE:
+ *	The GTK+ callback function: gtk_widget_destroyed()
+ *	ensures that the widget pointer will be set to NULL
+ *	after the widget gets destroyed.
  *****************************************************
  */
 static gboolean gui_init_settings_hsliderMaxSteps(
@@ -2080,14 +2158,15 @@ static gboolean gui_init_settings_hsliderMaxSteps(
 /*************************************************//**
  * Initialize the check-button "Use 2D rolling-effect".
  *
- *	Copies the GUI check-button from the specified GTK+
- *	builder into my GUI settings abstraction: gui->settings,
- *	it connects callback functions to it and initializes its
- *	visual appearance.
+ * Copies the GUI check-button from the specified GTK+
+ * builder into my GUI settings abstraction: gui->settings,
+ * it connects callback functions to it and initializes
+ * its visual appearance.
  *
- *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
- *		ensures that the widget pointer will be set to NULL
- *		after the widget gets destroyed.
+ * NOTE:
+ * 	The GTK+ callback function: gtk_widget_destroyed()
+ *	ensures that the widget pointer will be set to NULL
+ *	after the widget gets destroyed.
  *****************************************************
  */
 static gboolean gui_init_settings_chkbtnUse2dRollEffect(
@@ -2135,14 +2214,15 @@ static gboolean gui_init_settings_chkbtnUse2dRollEffect(
 /*************************************************//**
  * Initialize the check-button "Debugging mode".
  *
- *	Copies the GUI check-button from the specified GTK+
- *	builder into my GUI settings abstraction: gui->settings,
- *	it connects callback functions to it and initializes its
- *	visual appearance.
+ * Copies the GUI check-button from the specified GTK+
+ * builder into my GUI settings abstraction: gui->settings,
+ * it connects callback functions to it and initializes its
+ * visual appearance.
  *
- *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
- *		ensures that the widget pointer will be set to NULL
- *		after the widget gets destroyed.
+ * NOTE:
+ *	The GTK+ callback function: gtk_widget_destroyed()
+ *	ensures that the widget pointer will be set to NULL
+ *	after the widget gets destroyed.
  *****************************************************
  */
 static gboolean gui_init_settings_chkbtnDebugInfo(
@@ -2188,9 +2268,9 @@ static gboolean gui_init_settings_chkbtnDebugInfo(
 }
 
 /*************************************************//**
- * NOTE *
- *	This function used to init the 3d-animation area, in
- *	previous versions of the program. Since there is now
+ * NOTE:
+ *	The following function used to init the 3d-animation area,
+ *	in previous versions of the program. Since there is now
  *	just one animation-area for both 2d and 3d animations,
  *	here I'm just loading the old 3d-area (that is the
  *	"vbox3d" container) and then I destroy it. This also
@@ -2200,7 +2280,10 @@ static gboolean gui_init_settings_chkbtnDebugInfo(
  *	future experimentation.
  *****************************************************
  */
-static gboolean gui_init_dieArea3d( Gui *gui, GtkBuilder *builder )
+static gboolean gui_init_dieArea3d(
+	Gui         *gui,
+	GtkBuilder  *builder
+	)
 {
 	/* sanity checks */
 	if ( !gui ) {
@@ -2239,20 +2322,24 @@ static gboolean gui_init_dieArea3d( Gui *gui, GtkBuilder *builder )
 /*************************************************//**
  * Initialize the "DieArea" of the GUI.
  *
- *	The "DieArea" is a custom GUI abstraction consisting of
- *	three GTK+ widgets: an event-box, an image and a button.
+ * The "DieArea" is a custom GUI abstraction consisting of
+ * three GTK+ widgets: an event-box, an image and a button.
  *
- *	This function copies those widgets from the specified GTK+
- *	builder into my GUI abstraction: gui->dieArea (GuiDieArea),
- *	it connects callback functions to them and it initializes
- *	their visual appearance.
+ * This function copies those widgets from the specified GTK+
+ * builder into my GUI abstraction: gui->dieArea (GuiDieArea),
+ * it connects callback functions to them and it initializes
+ * their visual appearance.
  *
- *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
- *		ensures that the widget pointer will be set to NULL
- *		after the widget gets destroyed.
+ * NOTE:
+ *	The GTK+ callback function: gtk_widget_destroyed()
+ *	ensures that the widget pointer will be set to NULL
+ *	after the widget gets destroyed.
  *****************************************************
  */
-static gboolean gui_init_dieArea( Gui *gui, GtkBuilder *builder )
+static gboolean gui_init_dieArea(
+	Gui         *gui,
+	GtkBuilder  *builder
+	)
 {
 	/* sanity checks */
 	if ( !gui ) {
@@ -2316,39 +2403,43 @@ static gboolean gui_init_dieArea( Gui *gui, GtkBuilder *builder )
 /*************************************************//**
  * Initialize the "About" dialog.
  *
- *	Copies the GUI dialog "About" from the specified GTK+
- *	builder into my GUI abstraction: gui->dlgAbout, it
- *	initializes the dialog's contents and it connects
- *	callback functions.
+ * Copies the GUI dialog "About" from the specified GTK+
+ * builder into my GUI abstraction: gui->dlgAbout, it
+ * initializes the dialog's contents and it connects
+ * callback functions.
  *
- *	The "About" dialog is defined of type GtkAboutDialog
- *	in the Glade file, which provides a standardized way
- *	of presenting inormation. However, I haven't found
- *	an easy way to access the members of its action-area,
- *	namely the buttons: "Credits", "License" and "Close".
+ * The "About" dialog is defined of type GtkAboutDialog
+ * in the Glade file, which provides a standardized way
+ * of presenting inormation. However, I haven't found
+ * an easy way to access the members of its action-area,
+ * namely the buttons: "Credits", "License" and "Close".
  *
- *	Consequently, I cannot mark the labels of those buttons
- *	as translatable, for the GNU-gettext library (I could
- *	implement it as a normal GtkDialog, but I prefer to
- *	learn the GtkAboutDialog internals and use them in
- *	a future version).
+ * Consequently, I cannot mark the labels of those buttons
+ * as translatable, for the GNU-gettext library (I could
+ * implement it as a normal GtkDialog, but I prefer to
+ * learn the GtkAboutDialog internals and use them in
+ * a future version).
  *
- *	NOTE:	The callback function: on_activate_link_dlgAbout()
- *		is connected to the "activate-link" signal ONLY
- *		when the program is compiled under Win32. GTK+'s
- *		file-engine (Gio) has trouble registering the
- *		"http://" and "mailto:" protocols under Win32,
- *		so I conditionally use the Win32 API if needed.
+ * NOTE:
+ *	The callback function: on_activate_link_dlgAbout()
+ *	is connected to the "activate-link" signal ONLY
+ *	when the program is compiled under Win32. GTK+'s
+ *	file-engine (Gio) has trouble registering the
+ *	"http://" and "mailto:" protocols under Win32,
+ *	so I conditionally use the Win32 API if needed.
  *
- *		The GTK+ callback function: gtk_widget_destroyed()
- *		ensures that the dialog's pointer will be set to
- *		NULL after the widget gets destroyed.
+ *	The GTK+ callback function: gtk_widget_destroyed()
+ *	ensures that the dialog's pointer will be set to
+ *	NULL after the widget gets destroyed.
  *****************************************************
  */
-static gboolean gui_init_dlgAbout( Gui *gui, GtkBuilder *builder )
+static gboolean gui_init_dlgAbout(
+	Gui         *gui,
+	GtkBuilder  *builder
+	)
 {
-	GdkPixbuf *logo = NULL;
-	GError *error = NULL;
+	GdkPixbuf   *logo      = NULL;
+	GError      *error     = NULL;
 	const gchar *authors[] = {TXT_APP_AUTHOR, NULL};
 	const gchar *artists[] = {TXT_APP_ARTIST, NULL};
 
@@ -2461,17 +2552,21 @@ static gboolean gui_init_dlgAbout( Gui *gui, GtkBuilder *builder )
 /*************************************************//**
  * Initialize the menus of the program.
  *
- *	Copies the menu widgets from the specified GTK+ builder
- *	into my GUI abstraction: gui->menu (GuiMenus), it connects
- *	callback functions to them and it initializes their visual
- *	appearance.
+ * Copies the menu widgets from the specified GTK+ builder
+ * into my GUI abstraction: gui->menu (GuiMenus), it connects
+ * callback functions to them and it initializes their visual
+ * appearance.
  *
- *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
- *		ensures that the widget pointer will be set to NULL
- *		after the widget gets destroyed.
+ * NOTE:
+ *	The GTK+ callback function: gtk_widget_destroyed()
+ *	ensures that the widget pointer will be set to NULL
+ *	after the widget gets destroyed.
  *****************************************************
  */
-static gboolean gui_init_menus( Gui *gui, GtkBuilder *builder )
+static gboolean gui_init_menus(
+	Gui         *gui,
+	GtkBuilder  *builder
+	)
 {
 	if ( !gui ) {
 		DBG_GUI_ERRMSG( NULL, _("Invalid pointer arg (gui)") );
@@ -2612,22 +2707,26 @@ static gboolean gui_init_menus( Gui *gui, GtkBuilder *builder )
 /*************************************************//**
  * Initialize the status-bar of our main window.
  *
- *	Copies the GUI status-bar from the specified GTK+ builder into
- *	my GUI status-bar abstraction: gui->statusBar (GuiStatusBar),
- *	it connects callback functions to it and initializes its visual
- *	appearance.
+ * Copies the GUI status-bar from the specified GTK+ builder into
+ * my GUI status-bar abstraction: gui->statusBar (GuiStatusBar),
+ * it connects callback functions to it and initializes its visual
+ * appearance.
  *
- *	My status-bar abstraction consists of a GTK+ statusbar widget,
- *	and a couple of supporting fields for the context-id and the
- *	text-message. We get the former from the builder and we
- *	initialize & apply the latter.
+ * My status-bar abstraction consists of a GTK+ statusbar widget,
+ * and a couple of supporting fields for the context-id and the
+ * text-message. We get the former from the builder and we
+ * initialize & apply the latter.
  *
- *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
- *		ensures that the widget pointer will be set to NULL
- *		after the widget gets destroyed.
+ * NOTE:
+ *	The GTK+ callback function: gtk_widget_destroyed()
+ *	ensures that the widget pointer will be set to NULL
+ *	after the widget gets destroyed.
  *****************************************************
  */
-static gboolean gui_init_statusBar( Gui *gui, GtkBuilder *builder )
+static gboolean gui_init_statusBar(
+	Gui         *gui,
+	GtkBuilder  *builder
+	)
 {
 	/* sanity checks */
 	if ( !gui ) {
@@ -2663,16 +2762,20 @@ static gboolean gui_init_statusBar( Gui *gui, GtkBuilder *builder )
 /*************************************************//**
  * Initialize the main window of the application.
  *
- *	Copies the main window widget from the specified GTK+ builder
- *	to my GUI abstraction: gui->appWindow, it connects callback
- *	functions to it and initializes its visual appearance.
+ * Copies the main window widget from the specified GTK+ builder
+ * to my GUI abstraction: gui->appWindow, it connects callback
+ * functions to it and initializes its visual appearance.
  *
- *	NOTE:	The GTK+ callback function: gtk_widget_destroyed()
- *		ensures that the widget pointer will be set to NULL
- *		after the widget gets destroyed.
+ * NOTE:
+ *	The GTK+ callback function: gtk_widget_destroyed()
+ *	ensures that the widget pointer will be set to NULL
+ *	after the widget gets destroyed.
  *****************************************************
  */
-static gboolean gui_init_appWindow( Gui *gui, GtkBuilder *builder )
+static gboolean gui_init_appWindow(
+	Gui         *gui,
+	GtkBuilder  *builder
+	)
 {
 	/* sanity checks */
 	if ( !gui ) {
@@ -2731,8 +2834,8 @@ static void gui_get_caller_locale_environment( Gui *gui )
 
 	temp = setlocale(LC_ALL, NULL);
 	strncpy(gui->callerLocaleEnv.locale, temp, MAXSIZ_LOCALE-1);
-	gui->callerLocaleEnv.varLang	= (gchar *) g_getenv("LANG");
-	gui->callerLocaleEnv.varLanguage= (gchar *) g_getenv("LANGUAGE");
+	gui->callerLocaleEnv.varLang     = (gchar *) g_getenv("LANG");
+	gui->callerLocaleEnv.varLanguage = (gchar *) g_getenv("LANGUAGE");
 
 	if ( !gui->callerLocaleEnv.locale
 	|| !gui->callerLocaleEnv.varLang || !gui->callerLocaleEnv.varLanguage
@@ -2786,17 +2889,20 @@ static gboolean gui_unload( Gui *gui )
 /*************************************************//**
  * Load GUI resources from the specified Glade file.
  *
- *	This function uses a GTK+ builder object to read the
- *	GUI resources defined in the specified glade-file,
- *	then it copies into my GUI abstraction only those
- *	resources that need further manipulation dynamically,
- *	and it initializes them.
+ * This function uses a GTK+ builder object to read the
+ * GUI resources defined in the specified glade-file,
+ * then it copies into my GUI abstraction only those
+ * resources that need further manipulation dynamically,
+ * and it initializes them.
  *****************************************************
  */
-static gboolean gui_load_gtkGladeFile( Gui *gui, const gchar *fnameGlade )
+static gboolean gui_load_gtkGladeFile(
+	Gui          *gui,
+	const gchar  *fnameGlade
+	)
 {
-	GtkBuilder	*builder = NULL;
-	GError		*error = NULL;
+	GtkBuilder *builder = NULL;
+	GError	   *error   = NULL;
 
 	/* sanity checks */
 	if ( !gui ) {
@@ -2844,36 +2950,41 @@ static gboolean gui_load_gtkGladeFile( Gui *gui, const gchar *fnameGlade )
 /*************************************************//**
  * Reload GUI resources from the specified Glade file.
  *
- *	This function is called when the user requests a dynamic
- *	change of the GUI language, via the "Language" menu.
+ * This function is called when the user requests a dynamic
+ * change of the GUI language, via the "Language" menu.
  *
- *	It schedules the destruction of all the top-level windows
- *	of the program by calling gtk_widget_destroy() on them.
+ * It schedules the destruction of all the top-level windows
+ * of the program by calling gtk_widget_destroy() on them.
  *
- *	Before scheduling the main window of the application,
- *	it sets 'gui->quitOnDestroyAppWindow' to FALSE so that
- *	the connected callback function: on_destroy_appWindow()
- *	will NOT terminate the program after destructing the window
- *	(remember that 'gui' is passed as user-data to the callback
- *	function).
+ * Before scheduling the main window of the application,
+ * it sets 'gui->quitOnDestroyAppWindow' to FALSE so that
+ * the connected callback function: on_destroy_appWindow()
+ * will NOT terminate the program after destructing the window
+ * (remember that 'gui' is passed as user-data to the callback
+ * function).
  *
- *	Once scheduling is done, 'gui->quitOnDestroyAppWindow'
- *	is reset back to TRUE and the GUI resources are loaded
- *	from scratch, from the glade-file into my 'gui' abstarction,
- *	by calling: gui_load_gtkGladeFile().
+ * Once scheduling is done, 'gui->quitOnDestroyAppWindow'
+ * is reset back to TRUE and the GUI resources are loaded
+ * from scratch, from the glade-file into my 'gui' abstarction,
+ * by calling: gui_load_gtkGladeFile().
  *
- *	NOTE:	Before this function is called, the environment-variable
- *		LANG is explicitly set according to the user-request.
- *		Since the GNU-gettext library is runtime-aware with
- *		a LANG dependency, the reloaded GUI is displayed in
- *		the language requested by the user.
+ * NOTE:
+ *	Before this function is called, the environment-variable
+ *	LANG is explicitly set according to the user-request.
+ *	Since the GNU-gettext library is runtime-aware with
+ *	a LANG dependency, the reloaded GUI is displayed in
+ *	the language requested by the user.
  *
- * 	See also:
- *		on_activate_miEnglish(), on_activate_miGreek(),
- *		and on_activate_miEnvLang().
+ * See also:
+ *	on_activate_miEnglish()
+ *	on_activate_miGreek()
+ *	and on_activate_miEnvLang()
  *****************************************************
  */
-static gboolean gui_reload_gtkGladeFile( Gui *gui, const gchar *fnameGlade )
+static gboolean gui_reload_gtkGladeFile(
+	Gui         *gui,
+	const gchar *fnameGlade
+	)
 {
 	/* sanity check */
 	if ( !gui ) {
@@ -2920,28 +3031,29 @@ static void gui_cleanup( Gui *gui )
 }
 
 /*************************************************//**
- * Initialize the gui abstraction using GTK+2.
+ * Initialize the Gui abstraction using GTK+2.
  *
- *	This function initializes our GUI abstraction (gui)
- *	as a GTK+ gui & links it with the program's core-data.
+ * This function initializes our GUI abstraction (gui)
+ * as a GTK+ gui & links it with the program's core-data.
  *
- *	NOTE:	For details about the fields: gui->envLang
- *		and gui->quitOnDestroyAppWindow, consult
- *		the comments of the following functions:
- *			on_destroy_appWindow()
- *			gui_reload_gtkGladeFile()
- *			on_activate_miEnglish()
- *			on_activate_miGreek()
- *			on_activate_miEnvLang()
- *			on_activate_miQuit()
+ * NOTE:
+ *For details about the fields: gui->envLang
+ *	and gui->quitOnDestroyAppWindow, consult
+ *	the comments of the following functions:
+ *		on_destroy_appWindow()
+ *		gui_reload_gtkGladeFile()
+ *		on_activate_miEnglish()
+ *		on_activate_miGreek()
+ *		on_activate_miEnvLang()
+ *		on_activate_miQuit()
  *****************************************************
  */
 static gboolean gui_init_as_gtk2(
-	Gui		*gui,		/* our (barely) GUI abstraction */
-	const Core	*core,		/* for linking gui to app's core-data */
-	int		*argc,		/* needed by GTK+ during initialization */
-	char		***argv,	/* needed by GTK+ during initialization */
-	const gchar	*fnameGladeFile	/* glade-file defining our GTK+ resources */
+	Gui         *gui,           /* our (barely) GUI abstraction */
+	const Core  *core,          /* for linking gui to app's core-data */
+	int         *argc,          /* needed by GTK+ during initialization */
+	char        ***argv,        /* needed by GTK+ during initialization */
+	const gchar *fnameGladeFile /* glade-file defining our GTK+ resources */
 	)
 {
 	/* sanity checks */
@@ -2998,17 +3110,17 @@ static void core_cleanup( Core *core )
 /*************************************************//**
  * Initialize the core-data of the program.
  *
- *	As core-data I define the minimum information
- *	needed for the program to be operational even
- *	without a GUI.
+ * As core-data I define the minimum information
+ * needed for the program to be operational even
+ * without a GUI.
  *
- *	This may prove handy if we decide later on to
- *	implement a fallback vanilla text-interface,
- *	in case the GUI fails to get initialized.
+ * This may prove handy if we decide later on to
+ * implement a fallback vanilla text-interface,
+ * in case the GUI fails to get initialized.
  *
- *	For this little demo program, the core-data
- *	consist of just a GLib random-generator and
- *	the final outcome after rolling the die.
+ * For this little demo program, the core-data
+ * consist of just a GLib random-generator and
+ * the final outcome after rolling the die.
  *****************************************************
  */
 static gboolean core_init( Core *core )
@@ -3031,8 +3143,8 @@ static gboolean core_init( Core *core )
  */
 int main( int argc, char **argv )
 {
-	Core	core;	/* core-data of the program */
-	Gui	gui;	/* my (barely) abstracted GUI */
+	Core core;      /* core-data of the program */
+	Gui  gui;       /* my (barely) abstracted GUI */
 
 	global_debugOn = TRUE;
 /*	memset( &gui, 0, sizeof(Gui) );
