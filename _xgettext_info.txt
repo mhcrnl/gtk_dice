@@ -105,7 +105,7 @@ msginit -l el -o gtk_dice.po -i default.pot
  * a graphical user interface (GUI) and a native Windows binary. This is
  * actually what I use! I simply load the template file "gtk_dice.pot"
  * into POEDIT, then I fill-in the header info via the tab "Translation
- * Properties" (open it via "Catalog -> Proprties") and lastly I use
+ * Properties" (open it via "Catalog -> Properties") and lastly I use
  * "File -> Save as..." to create the file "gtk_dice.po". 
  */
 

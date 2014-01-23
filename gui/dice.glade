@@ -120,6 +120,7 @@
                         <property name="use_underline">True</property>
                         <property name="image">imgStockQuit</property>
                         <property name="use_stock">False</property>
+                        <accelerator key="q" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                   </object>
@@ -149,6 +150,7 @@
                         <property name="image">imgFlagEn</property>
                         <property name="use_stock">False</property>
                         <property name="always_show_image">True</property>
+                        <accelerator key="e" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -162,6 +164,7 @@
                         <property name="image">imgFlagEl</property>
                         <property name="use_stock">False</property>
                         <property name="always_show_image">True</property>
+                        <accelerator key="g" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -205,6 +208,7 @@
                         <property name="image">imgFlagEnvLang</property>
                         <property name="use_stock">False</property>
                         <property name="always_show_image">True</property>
+                        <accelerator key="v" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                   </object>
@@ -232,6 +236,7 @@
                         <property name="image">imgStockAbout</property>
                         <property name="use_stock">False</property>
                         <property name="always_show_image">True</property>
+                        <accelerator key="a" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                   </object>
